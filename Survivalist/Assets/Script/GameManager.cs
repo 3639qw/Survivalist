@@ -196,6 +196,13 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // 게임 종료
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+
         if (isGetsWater)
         {
             nowact = "물 정화하는 중...";
