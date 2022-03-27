@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,151 +12,151 @@ public class GameManager : MonoBehaviour
     Act_function act;
     TextSync ts;
 
-    // °ÔÀÓ³» º¯¼öµé
+    // ê²Œì„ë‚´ ë³€ìˆ˜ë“¤
 
-    /*(ÀúÀå´ë»ó)*/ protected internal int water = 0; // ¹°
-    /*(ÀúÀå´ë»ó)*/ protected internal int food = 0; // À½½Ä
-    /*(ÀúÀå´ë»ó)*/ protected internal int wood = 0; // ³ª¹«
-    /*(ÀúÀå´ë»ó)*/ protected internal int leather = 0; // °¡Á×
-    /*(ÀúÀå´ë»ó)*/ protected internal int straw = 0; // Â¤
-    /*(ÀúÀå´ë»ó)*/ protected internal int leaf = 0; // ³ª¹µÀÙ
-    /*(ÀúÀå´ë»ó)*/ protected internal int rock = 0; // µ¹
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int water = 0; // ë¬¼
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int food = 0; // ìŒì‹
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int wood = 0; // ë‚˜ë¬´
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int leather = 0; // ê°€ì£½
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int straw = 0; // ì§š
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int leaf = 0; // ë‚˜ë­‡ì
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int rock = 0; // ëŒ
                   
-    /*(ÀúÀå´ë»ó)*/ protected internal int day = 1; // »ıÁ¸ÇÑ ÀÏ¼ö
-    /*(ÀúÀå´ë»ó)*/ protected internal int log = 1; // ·Î±× ¹øÈ£
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int day = 1; // ìƒì¡´í•œ ì¼ìˆ˜
+    /*(ì €ì¥ëŒ€ìƒ)*/ protected internal int log = 1; // ë¡œê·¸ ë²ˆí˜¸
 
-    // ÄğÅ¸ÀÓÁß Çàµ¿°³½Ã
-    protected internal bool isGetsWater; // ¹° Áõ·ù
-    protected internal bool isForage; // ÆÄ¹Ö
-    protected internal bool isHunt; // »ç³É
-    protected internal bool isEat; // ½Ä»ç
-    protected internal bool isDrink; // ¹°ÀÌ³ª ¸Ô¾î¶ó
-    protected internal bool isMaterial; // ÀÚ¿ø ¼öÁı
-    protected internal bool isSleep; // ÃëÄ§
+    // ì¿¨íƒ€ì„ì¤‘ í–‰ë™ê°œì‹œ
+    protected internal bool isGetsWater; // ë¬¼ ì¦ë¥˜
+    protected internal bool isForage; // íŒŒë°
+    protected internal bool isHunt; // ì‚¬ëƒ¥
+    protected internal bool isEat; // ì‹ì‚¬
+    protected internal bool isDrink; // ë¬¼ì´ë‚˜ ë¨¹ì–´ë¼
+    protected internal bool isMaterial; // ìì› ìˆ˜ì§‘
+    protected internal bool isSleep; // ì·¨ì¹¨
 
 
-    public Text[] Log; // ·Î±× Txt
-    public Text timetxt; // ½Ã°£ Txt
-    public Text cooltimetxt; // ÄğÅ¸ÀÓ Txt
+    public Text[] Log; // ë¡œê·¸ Txt
+    public Text timetxt; // ì‹œê°„ Txt
+    public Text cooltimetxt; // ì¿¨íƒ€ì„ Txt
 
-    public Text cheattxt; // Ä¡Æ® txt
+    public Text cheattxt; // ì¹˜íŠ¸ txt
 
-    protected internal string nowact; // ÇöÀç ÇÏ°í ÀÖ´ÂÀÏ string
+    protected internal string nowact; // í˜„ì¬ í•˜ê³  ìˆëŠ”ì¼ string
 
-    float sec; // ÃÊ½Ã°è
+    float sec; // ì´ˆì‹œê³„
 
-    /* Áö¿ªº¯¼öÈ­ Àü¿ªº¯¼ö */
-    protected internal float act_sec; // Çàµ¿ÇÒ¶§ Ã¼Å©ÇÏ´Â ÃÊ½Ã°è
+    /* ì§€ì—­ë³€ìˆ˜í™” ì „ì—­ë³€ìˆ˜ */
+    protected internal float act_sec; // í–‰ë™í• ë•Œ ì²´í¬í•˜ëŠ” ì´ˆì‹œê³„
     
     //-------------------
 
 
-    int time = 6; // ¿ùµå ½Ã°£ (¿ÀÀü 6½Ã)
-    bool isAm = true; // ½Ã°£ÀÌ ¿ÀÀüÀÎÁö ¿©ºÎ
+    int time = 6; // ì›”ë“œ ì‹œê°„ (ì˜¤ì „ 6ì‹œ)
+    bool isAm = true; // ì‹œê°„ì´ ì˜¤ì „ì¸ì§€ ì—¬ë¶€
 
 
-    protected internal float cooltime = 0; // ÄğÅ¸ÀÓ
-    protected internal bool isCooltime; // ÄğÅ¸ÀÓ °É·È´ÂÁö ¿©ºÎ
+    protected internal float cooltime = 0; // ì¿¨íƒ€ì„
+    protected internal bool isCooltime; // ì¿¨íƒ€ì„ ê±¸ë ¸ëŠ”ì§€ ì—¬ë¶€
 
 
     //---------------------------------------------------------------------------
 
-    // ÇÁ¸®¼Â º¯¼ö
-    // Çàµ¿º° ÄğÅ¸ÀÓ ÇÁ¸®¼Â
-    // 0: ¹°, 1: ÆÄ¹Ö, 2: »ç³É, 3: ¸Ô´Â´Ù, 4: ¸¶½Å´Ù, 5: Àç·á, 6: ÃëÄ§
+    // í”„ë¦¬ì…‹ ë³€ìˆ˜
+    // í–‰ë™ë³„ ì¿¨íƒ€ì„ í”„ë¦¬ì…‹
+    // 0: ë¬¼, 1: íŒŒë°, 2: ì‚¬ëƒ¥, 3: ë¨¹ëŠ”ë‹¤, 4: ë§ˆì‹ ë‹¤, 5: ì¬ë£Œ, 6: ì·¨ì¹¨
 
     float[] act_cooltime = new float[] { 5, 9, 12, 5, 5, 15, 10 };
 
-    // Çàµ¿º° ¼öÄ¡ ÇÏ¶ô ºñÀ²
-    // 0: Ã¼·Â, 1: Æ÷¸¸°¨, 2: °¥Áõ, 3: ÇÇ·Îµµ
-    protected internal float[] act_getwater = new float[] {1.2f, 1.0f, .3f, .8f}; // ¹°
-    protected internal float[] act_goforage = new float[] {1.2f, .6f, 0.8f, 1.0f}; // ÆÄ¹Ö
-    protected internal float[] act_hunt = new float[] {.4f, .3f, .35f, .35f}; // »ç³É
-    protected internal float[] act_eatfood = new float[] {0, 0, .07f };  // ½Ä»ç
-    protected internal float[] act_material = new float[] {.2f, .2f, .2f, .2f }; // Àç·á
-    protected internal float[] act_sleep = new float[] { 0, .07f, .1f }; // ÃëÄ§
+    // í–‰ë™ë³„ ìˆ˜ì¹˜ í•˜ë½ ë¹„ìœ¨
+    // 0: ì²´ë ¥, 1: í¬ë§Œê°, 2: ê°ˆì¦, 3: í”¼ë¡œë„
+    protected internal float[] act_getwater = new float[] {1.2f, 1.0f, .3f, .8f}; // ë¬¼
+    protected internal float[] act_goforage = new float[] {1.2f, .6f, 0.8f, 1.0f}; // íŒŒë°
+    protected internal float[] act_hunt = new float[] {.4f, .3f, .35f, .35f}; // ì‚¬ëƒ¥
+    protected internal float[] act_eatfood = new float[] {0, 0, .07f };  // ì‹ì‚¬
+    protected internal float[] act_material = new float[] {.2f, .2f, .2f, .2f }; // ì¬ë£Œ
+    protected internal float[] act_sleep = new float[] { 0, .07f, .1f }; // ì·¨ì¹¨
 
-    // È°µ¿½Ã ³­¼ö°ª 0 ³ª¿ÔÀ»¶§ (ÇãÅÁÃÆÀ»¶§) ´É·ÂÄ¡ ÀÓÀÇ °ªÀ¸·Î °¨¼Ò
-    // 0: ¹°, 1. ÆÄ¹Ö, 2. »ç³É, 3. Àç·á 
+    // í™œë™ì‹œ ë‚œìˆ˜ê°’ 0 ë‚˜ì™”ì„ë•Œ (í—ˆíƒ•ì³¤ì„ë•Œ) ëŠ¥ë ¥ì¹˜ ì„ì˜ ê°’ìœ¼ë¡œ ê°ì†Œ
+    // 0: ë¬¼, 1. íŒŒë°, 2. ì‚¬ëƒ¥, 3. ì¬ë£Œ 
     protected internal float[] act_vain = new float[] { .6f, .8f, .3f, .1f };
 
-    // È°µ¿ ¼º°ø È®·ü (¾ÆÀÌÅÛ ÆÄ¹Ö È°µ¿¿¡¸¸ ÇØ´ç)
-    // 0: ¹°, 1: ÆÄ¹Ö, 2: »ç³É, 3: Àç·á
-    // ¾Æ·¡ ¼ıÀÚ¸¸Å­ ³­¼ö±â »ğÀÔ
-    // 0ÀÌ °É·ÈÀ»¶§¸¸ ½ÇÆĞ
+    // í™œë™ ì„±ê³µ í™•ë¥  (ì•„ì´í…œ íŒŒë° í™œë™ì—ë§Œ í•´ë‹¹)
+    // 0: ë¬¼, 1: íŒŒë°, 2: ì‚¬ëƒ¥, 3: ì¬ë£Œ
+    // ì•„ë˜ ìˆ«ìë§Œí¼ ë‚œìˆ˜ê¸° ì‚½ì…
+    // 0ì´ ê±¸ë ¸ì„ë•Œë§Œ ì‹¤íŒ¨
     protected internal int[] act_success = new int[] { 5, 5, 3, 3 };
 
-    // ¾ÆÀÌÅÛ °¹¼ö °¡Ã­ ¹Ù¿î´õ¸®
-    // 0: ¹°, 1: ÆÄ¹Ö, 2: »ç³É, 3: ¸Ô´Â´Ù, 4: ¸¶½Å´Ù, 5: Àç·á, 6: ÃëÄ§
-    // 0¹øÀÎµ¦½ººÎÅÍ ½ÃÀÛÇÏ¿© 1¹øÀÎµ¦½º±îÁö ³­¼ö±â »ğÀÔ
-    protected internal int[] act_getwater_range = new int[] { 1, 10 }; // ¹°
-    protected internal int[] act_goforage_range = new int[] { 1, 4 }; // ÆÄ¹Ö
-    protected internal int[] act_hunt_range = new int[] { 4, 10 }; // »ç³É
-    protected internal int[] act_eat_range = new int[] { 1, 10 }; // ½Ä»ç
-    protected internal int[] act_drink_range = new int[] { 1, 10 }; // ÄåÄå
-    protected internal int[] act_material_range = new int[] { 1, 10 }; // Àç·á
-    protected internal int[] act_sleep_range = new int[] { 1, 5 }; // ÃëÄ§
+    // ì•„ì´í…œ ê°¯ìˆ˜ ê°€ì±  ë°”ìš´ë”ë¦¬
+    // 0: ë¬¼, 1: íŒŒë°, 2: ì‚¬ëƒ¥, 3: ë¨¹ëŠ”ë‹¤, 4: ë§ˆì‹ ë‹¤, 5: ì¬ë£Œ, 6: ì·¨ì¹¨
+    // 0ë²ˆì¸ë±ìŠ¤ë¶€í„° ì‹œì‘í•˜ì—¬ 1ë²ˆì¸ë±ìŠ¤ê¹Œì§€ ë‚œìˆ˜ê¸° ì‚½ì…
+    protected internal int[] act_getwater_range = new int[] { 1, 10 }; // ë¬¼
+    protected internal int[] act_goforage_range = new int[] { 1, 4 }; // íŒŒë°
+    protected internal int[] act_hunt_range = new int[] { 4, 10 }; // ì‚¬ëƒ¥
+    protected internal int[] act_eat_range = new int[] { 1, 10 }; // ì‹ì‚¬
+    protected internal int[] act_drink_range = new int[] { 1, 10 }; // ì½¸ì½¸
+    protected internal int[] act_material_range = new int[] { 1, 10 }; // ì¬ë£Œ
+    protected internal int[] act_sleep_range = new int[] { 1, 5 }; // ì·¨ì¹¨
 
-    // È°µ¿½Ã ÇÊ¿äÇÑ ÃÖ¼ÒÇÑÀÇ ¼öÄ¡
-    // 0: ¹°, 1: ÆÄ¹Ö, 2: »ç³É, 3: ¸Ô´Â´Ù, 4: Àç·á
-    // 0: ¿¡³ÊÁö, 1: Æ÷¸¸°¨, 2: ÃËÃËÇÔ, 3: ÇÇ·Îµµ
-    protected internal float[] act_getwater_min = new float[] {1, 1, 1, 99}; // ¹°
-    protected internal float[] act_goforgage_min = new float[] {3, 3, 3, 80}; // ÆÄ¹Ö
-    protected internal float[] act_hunt_min = new float[] {5, 5, 5, 70}; // »ç³É
-    protected internal float[] act_eatfood_min = new float[] {0, 0, 1 }; // ¸Ô´Â´Ù
-    protected internal float[] act_material_min = new float[] { }; // Àç·á
-    protected internal float[] act_sleep_min = new float[] {0, 1, 1}; // ÃëÄ§
+    // í™œë™ì‹œ í•„ìš”í•œ ìµœì†Œí•œì˜ ìˆ˜ì¹˜
+    // 0: ë¬¼, 1: íŒŒë°, 2: ì‚¬ëƒ¥, 3: ë¨¹ëŠ”ë‹¤, 4: ì¬ë£Œ
+    // 0: ì—ë„ˆì§€, 1: í¬ë§Œê°, 2: ì´‰ì´‰í•¨, 3: í”¼ë¡œë„
+    protected internal float[] act_getwater_min = new float[] {1, 1, 1, 99}; // ë¬¼
+    protected internal float[] act_goforgage_min = new float[] {3, 3, 3, 80}; // íŒŒë°
+    protected internal float[] act_hunt_min = new float[] {5, 5, 5, 70}; // ì‚¬ëƒ¥
+    protected internal float[] act_eatfood_min = new float[] {0, 0, 1 }; // ë¨¹ëŠ”ë‹¤
+    protected internal float[] act_material_min = new float[] { }; // ì¬ë£Œ
+    protected internal float[] act_sleep_min = new float[] {0, 1, 1}; // ì·¨ì¹¨
 
-    // ¸Ô°í ¸¶½Ç¶§ ¸Ô´Â À½½Ä ´ëºñ »ó½Âºñ
-    // 0: À½½Ä, 1: ¹°
+    // ë¨¹ê³  ë§ˆì‹¤ë•Œ ë¨¹ëŠ” ìŒì‹ ëŒ€ë¹„ ìƒìŠ¹ë¹„
+    // 0: ìŒì‹, 1: ë¬¼
     protected internal float[] act_food_ratio = new float[] {.7f, 1.0f };
 
-    // Slider °¡ ÇØ´ç °ª ¹Ì¸¸ ÀÏ°æ¿ì ±ô¹Ú°Å¸²
+    // Slider ê°€ í•´ë‹¹ ê°’ ë¯¸ë§Œ ì¼ê²½ìš° ê¹œë°•ê±°ë¦¼
     protected internal float lowvalue = 20;
 
     //---------------------------------------------------------------------------
 
-    /* Çàµ¿º° ÄğÅ¸ÀÓ
+    /* í–‰ë™ë³„ ì¿¨íƒ€ì„
      * 
-     * 1. ¹°: 5ÃÊ 
-     * 2. ÆÄ¹Ö: 9ÃÊ
-     * 3. »ç³É: 15ÃÊ
-     * 4. ¸Ô´Â´Ù: 5ÃÊ
-     * 5. ¸¶½Å´Ù: 5ÃÊ
-     * 6. Àç·á: 20ÃÊ
-     * 7. ÃëÄ§: 10ÃÊ
+     * 1. ë¬¼: 5ì´ˆ 
+     * 2. íŒŒë°: 9ì´ˆ
+     * 3. ì‚¬ëƒ¥: 15ì´ˆ
+     * 4. ë¨¹ëŠ”ë‹¤: 5ì´ˆ
+     * 5. ë§ˆì‹ ë‹¤: 5ì´ˆ
+     * 6. ì¬ë£Œ: 20ì´ˆ
+     * 7. ì·¨ì¹¨: 10ì´ˆ
      */
 
-    /* Çàµ¿º° ÇÊ¿äÇÑ Àç·á or ½ºÅ³
+    /* í–‰ë™ë³„ í•„ìš”í•œ ì¬ë£Œ or ìŠ¤í‚¬
      * 
-     * 1. ¹°: ³ª¹«, Â¤, ³ª¹µÀÙ (¿ŞÂÊÀ¸·Î °¥¼ö·Ï ¸¹Àº ¹°À» ¾òÀ» ¼ö ÀÖÀ½) | Ã¼·Â---, Çã±â--, °¥Áõ-
-     * 2. ÆÄ¹Ö:   | Ã¼·Â--, Çã±â---, °¥Áõ-
-     * 3. »ç³É: µ¹(¼±ÅÃ»çÇ×, ÀÖÀ¸¸é ½Ä·®È¹µæ È®·üÁõ°¡) | Ã¼·Â---, Çã±â---, °¥Áõ--
-     * 4. ¸Ô´Â´Ù: Â¤(¼±ÅÃ»çÇ×, ÀÖÀ¸¸é ½ÄÁßµ¶ È®·ü³·Ãã) | Çã±â+++, °¥Áõ-
-     * 5. ¸¶½Å´Ù: Â¤(¼±ÅÃ»çÇ×, ÀÖÀ¸¸é ¼öÀÎ¼º Àü¿°º´ °¨¿° È®·ü³·Ãã) | °¥Áõ +++
-     * 6. Àç·á:  | Ã¼·Â--, Çã±â-, °¥Áõ-
-     * 7. ÃëÄ§: È®·ü¿¡ µû¶ó ¾ß»ıµ¿¹°¿¡ ½À°İÀ» ¹Ş¾Æ »ı¸í ±ïÀÏ¼ö ÀÖÀ½
+     * 1. ë¬¼: ë‚˜ë¬´, ì§š, ë‚˜ë­‡ì (ì™¼ìª½ìœ¼ë¡œ ê°ˆìˆ˜ë¡ ë§ì€ ë¬¼ì„ ì–»ì„ ìˆ˜ ìˆìŒ) | ì²´ë ¥---, í—ˆê¸°--, ê°ˆì¦-
+     * 2. íŒŒë°:   | ì²´ë ¥--, í—ˆê¸°---, ê°ˆì¦-
+     * 3. ì‚¬ëƒ¥: ëŒ(ì„ íƒì‚¬í•­, ìˆìœ¼ë©´ ì‹ëŸ‰íšë“ í™•ë¥ ì¦ê°€) | ì²´ë ¥---, í—ˆê¸°---, ê°ˆì¦--
+     * 4. ë¨¹ëŠ”ë‹¤: ì§š(ì„ íƒì‚¬í•­, ìˆìœ¼ë©´ ì‹ì¤‘ë… í™•ë¥ ë‚®ì¶¤) | í—ˆê¸°+++, ê°ˆì¦-
+     * 5. ë§ˆì‹ ë‹¤: ì§š(ì„ íƒì‚¬í•­, ìˆìœ¼ë©´ ìˆ˜ì¸ì„± ì „ì—¼ë³‘ ê°ì—¼ í™•ë¥ ë‚®ì¶¤) | ê°ˆì¦ +++
+     * 6. ì¬ë£Œ:  | ì²´ë ¥--, í—ˆê¸°-, ê°ˆì¦-
+     * 7. ì·¨ì¹¨: í™•ë¥ ì— ë”°ë¼ ì•¼ìƒë™ë¬¼ì— ìŠµê²©ì„ ë°›ì•„ ìƒëª… ê¹ì¼ìˆ˜ ìˆìŒ
      */
 
 
-    /* ¼öÄ¡º° »ó½Â ¿äÀÎ
+    /* ìˆ˜ì¹˜ë³„ ìƒìŠ¹ ìš”ì¸
      * 
-     * 1. »ı¸í: Ã¼·Â, Æ÷¸¸°¨, ¼öºĞ°¨, ÇÇ·Îµµ¿¡ µû¶ó ÀÚ¿¬ »ó½Â (´Ü ÀÚ¿¬ÀûÀ¸·Î´Â 60ÀÌ»ó »ó½Â ºÒ°¡)
-     * 2. Ã¼·Â: Æ÷¸¸°¨, ¼öºĞ°¨, ÇÇ·Îµµ¿¡ µû¶ó ÀÚ¿¬ »ó½Â
-     * 3. Æ÷¸¸°¨: ¹ä ¸¹ÀÌ ¸ÔÀ¸¸é 
-     * 4. ¼öºĞ°¨: ¹° ¸¹ÀÌ ¸¶¼Å
-     * 5. ÇÇ·Îµµ: Àá ¸¹ÀÌ ÀÚ
+     * 1. ìƒëª…: ì²´ë ¥, í¬ë§Œê°, ìˆ˜ë¶„ê°, í”¼ë¡œë„ì— ë”°ë¼ ìì—° ìƒìŠ¹ (ë‹¨ ìì—°ì ìœ¼ë¡œëŠ” 60ì´ìƒ ìƒìŠ¹ ë¶ˆê°€)
+     * 2. ì²´ë ¥: í¬ë§Œê°, ìˆ˜ë¶„ê°, í”¼ë¡œë„ì— ë”°ë¼ ìì—° ìƒìŠ¹
+     * 3. í¬ë§Œê°: ë°¥ ë§ì´ ë¨¹ìœ¼ë©´ 
+     * 4. ìˆ˜ë¶„ê°: ë¬¼ ë§ì´ ë§ˆì…”
+     * 5. í”¼ë¡œë„: ì  ë§ì´ ì
      */
 
-    /* ÀÚ¿øº° ¿ëµµ
+    /* ìì›ë³„ ìš©ë„
      * 
-     * 1. ¹°: °¥Áõ ÇØ°á
-     * 2. À½½Ä: Çã±â ÇØ°á
-     * 3. ³ª¹«: ¹° È¹µæ¼ö ++
-     * 4. °¡Á×: Ãß¿î ³¯¾¾ÀÇ ¿µÇâÀ» Àû°Ô ¹ŞÀ» ¼ö ÀÖÀ½
-     * 5. Â¤: ¹° È¹µæ¼ö +
-     * 6. ³ª¹µÀÙ: ¹° È¹µæ
-     * 7. µ¹: ¸ó½ºÅÍ³ª ¾ß»ıµ¿¹°ÀÌ µ¤Ä¥¶§ ´ëÀÀÇÒ ¼ö ÀÖÀ½, »ç³É½Ã¿¡ È®·üÁõ°¡
+     * 1. ë¬¼: ê°ˆì¦ í•´ê²°
+     * 2. ìŒì‹: í—ˆê¸° í•´ê²°
+     * 3. ë‚˜ë¬´: ë¬¼ íšë“ìˆ˜ ++
+     * 4. ê°€ì£½: ì¶”ìš´ ë‚ ì”¨ì˜ ì˜í–¥ì„ ì ê²Œ ë°›ì„ ìˆ˜ ìˆìŒ
+     * 5. ì§š: ë¬¼ íšë“ìˆ˜ +
+     * 6. ë‚˜ë­‡ì: ë¬¼ íšë“
+     * 7. ëŒ: ëª¬ìŠ¤í„°ë‚˜ ì•¼ìƒë™ë¬¼ì´ ë®ì¹ ë•Œ ëŒ€ì‘í•  ìˆ˜ ìˆìŒ, ì‚¬ëƒ¥ì‹œì— í™•ë¥ ì¦ê°€
      */
 
 
@@ -189,14 +189,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // °ÔÀÓ ·Îµù
+        // ê²Œì„ ë¡œë”©
         fileio.Load();
 
     }
 
     void Update()
     {
-        // °ÔÀÓ Á¾·á
+        // ê²Œì„ ì¢…ë£Œ
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -205,71 +205,71 @@ public class GameManager : MonoBehaviour
 
         if (isGetsWater)
         {
-            nowact = "¹° Á¤È­ÇÏ´Â Áß...";
+            nowact = "ë¬¼ ì •í™”í•˜ëŠ” ì¤‘...";
         }
         else if (isForage)
         {
-            nowact = "½Ä·®À» Ã£´Â Áß...";
+            nowact = "ì‹ëŸ‰ì„ ì°¾ëŠ” ì¤‘...";
         }
         else if (isHunt)
         {
-            nowact = "»ç³ÉÇÏ´Â Áß...";
+            nowact = "ì‚¬ëƒ¥í•˜ëŠ” ì¤‘...";
         }
         else if (isEat)
         {
-            nowact = "¹ä ¸Ô´Â Áß...";
+            nowact = "ë°¥ ë¨¹ëŠ” ì¤‘...";
         }
         else if (isDrink)
         {
-            nowact = "¹° ¸¶½Ã´Â Áß...";
+            nowact = "ë¬¼ ë§ˆì‹œëŠ” ì¤‘...";
         }
         else if (isMaterial)
         {
-            nowact = "ÀÚ¿øÀ» Ã£´Â Áß...";
+            nowact = "ìì›ì„ ì°¾ëŠ” ì¤‘...";
         }
         else if (isSleep)
         {
-            nowact = "²ÜÀá ¼÷¸é Áß...";
+            nowact = "ê¿€ì  ìˆ™ë©´ ì¤‘...";
         }
         else
         {
-            nowact = "½¬´Â Áß...";
+            nowact = "ì‰¬ëŠ” ì¤‘...";
         }
 
 
-        // ÄğÅ¸ÀÓ¾øÀ»¶§ ÇÒ ÀÏÀ» ¼±ÅÃÇÏ¼¼¿ä
+        // ì¿¨íƒ€ì„ì—†ì„ë•Œ í•  ì¼ì„ ì„ íƒí•˜ì„¸ìš”
         if (isCooltime)
         {
             Blinking.Instance.btxt.SetActive(false);
         }
         else
         {
-            Blinking.Instance.Blink(); // "ÇÒ ÀÏÀ» ¼±ÅÃÇÏ¼¼¿ä" ±ô¹ÚÀÓ Ãâ·Â
+            Blinking.Instance.Blink(); // "í•  ì¼ì„ ì„ íƒí•˜ì„¸ìš”" ê¹œë°•ì„ ì¶œë ¥
         }
 
 
 
         if (isCooltime && cooltime > 0)
         {
-            cooltimetxt.text = Mathf.CeilToInt(cooltime).ToString() + "ÃÊ)";
+            cooltimetxt.text = Mathf.CeilToInt(cooltime).ToString() + "ì´ˆ)";
         }
         else
         {
-            cooltimetxt.text = "¾øÀ½)";
-            act_sec = 0; // ÀÌº¥Æ® ÃÊ½Ã°è ÃÊ±âÈ­
+            cooltimetxt.text = "ì—†ìŒ)";
+            act_sec = 0; // ì´ë²¤íŠ¸ ì´ˆì‹œê³„ ì´ˆê¸°í™”
         }
 
-        sec += Time.deltaTime; // ÃÊ½Ã°è
+        sec += Time.deltaTime; // ì´ˆì‹œê³„
 
-        if(sec >= 3f) // 3ÃÊ°¡ ÇÑ½Ã°£
+        if(sec >= 3f) // 3ì´ˆê°€ í•œì‹œê°„
         {
 
-            // Æ÷¸¸°¨, °¥Áõ¿¡ µû¶ó Ã¼·Â È¸º¹
+            // í¬ë§Œê°, ê°ˆì¦ì— ë”°ë¼ ì²´ë ¥ íšŒë³µ
             if(ts.Energy.value < 100 && !isCooltime)
             {
                 if (ts.Hunger.value > 0 && ts.Moist.value > 0)
                 {
-                    int i; // °¡Ã­ ³­¼ö
+                    int i; // ê°€ì±  ë‚œìˆ˜
                     if (ts.Hunger.value >= 90 && ts.Moist.value >= 90 && ts.Hardest.value <= 10)
                     {
                         i = act.Gacha(6, 9);
@@ -296,26 +296,26 @@ public class GameManager : MonoBehaviour
                         Debug.Log("E");
                     }
 
-                    if (ts.Hunger.value >= 60 && ts.Moist.value >= 60 && ts.Hardest.value <= 40) // Æ÷¸¸°¨, °¥Áõ, ÇÇ·Îµµ 60ÀÌ»óÀÎ °æ¿ì Ã¼·Â 100±îÁö »ó½Â °¡´É
+                    if (ts.Hunger.value >= 60 && ts.Moist.value >= 60 && ts.Hardest.value <= 40) // í¬ë§Œê°, ê°ˆì¦, í”¼ë¡œë„ 60ì´ìƒì¸ ê²½ìš° ì²´ë ¥ 100ê¹Œì§€ ìƒìŠ¹ ê°€ëŠ¥
                     {
-                        if (i > (100 - ts.Energy.value)) // ÇÊ¿ä·®À» ³Ñ¾î°¥¶§
+                        if (i > (100 - ts.Energy.value)) // í•„ìš”ëŸ‰ì„ ë„˜ì–´ê°ˆë•Œ
                         {
-                            ts.Energy.value = 100; // ±×³É 100À¸·Î ¸ÂÃç¹ö¸°´Ù
+                            ts.Energy.value = 100; // ê·¸ëƒ¥ 100ìœ¼ë¡œ ë§ì¶°ë²„ë¦°ë‹¤
                         }
-                        else // 100 - energy °¡ i º¸´Ù Å¬¶§ 
+                        else // 100 - energy ê°€ i ë³´ë‹¤ í´ë•Œ 
                         {
-                            ts.Energy.value += i; // Ã¼·Â Áõ°¡
+                            ts.Energy.value += i; // ì²´ë ¥ ì¦ê°€
                         }
                     }
-                    else // Æ÷¸¸°¨, °¥Áõ, ÇÇ·Îµµ 60ÀÌÇÏÀÎ °æ¿ì Ã¼·Â 50±îÁö »ó½Â °¡´É
+                    else // í¬ë§Œê°, ê°ˆì¦, í”¼ë¡œë„ 60ì´í•˜ì¸ ê²½ìš° ì²´ë ¥ 50ê¹Œì§€ ìƒìŠ¹ ê°€ëŠ¥
                     {
-                        if (i > (50 - ts.Energy.value)) // ÇÊ¿ä·®À» ³Ñ¾î°¥¶§
+                        if (i > (50 - ts.Energy.value)) // í•„ìš”ëŸ‰ì„ ë„˜ì–´ê°ˆë•Œ
                         {
-                            ts.Energy.value = 50; // ±×³É 50À¸·Î ¸ÂÃç¹ö¸°´Ù
+                            ts.Energy.value = 50; // ê·¸ëƒ¥ 50ìœ¼ë¡œ ë§ì¶°ë²„ë¦°ë‹¤
                         }
-                        else // 50 - energy °¡ i º¸´Ù Å¬¶§ 
+                        else // 50 - energy ê°€ i ë³´ë‹¤ í´ë•Œ 
                         {
-                            ts.Energy.value += i; // Ã¼·Â Áõ°¡
+                            ts.Energy.value += i; // ì²´ë ¥ ì¦ê°€
                         }
                     }
 
@@ -328,93 +328,93 @@ public class GameManager : MonoBehaviour
             sec = 0;
         }
 
-        sec += Time.deltaTime; // ÃÊ½Ã°è
+        sec += Time.deltaTime; // ì´ˆì‹œê³„
 
-        if (isAm) // ¿ÀÀü
+        if (isAm) // ì˜¤ì „
         {
-            timetxt.text = time.ToString() + " ¿ÀÀü";
+            timetxt.text = time.ToString() + " ì˜¤ì „";
 
             if (time >= 12)
             {
                 isAm = false;
-                //Debug.Log("¿ÀÈÄ");
+                //Debug.Log("ì˜¤í›„");
                 time = 1;
             }
         }
-        else if (!isAm) // ¿ÀÈÄ
+        else if (!isAm) // ì˜¤í›„
         {
-            timetxt.text = time.ToString() + " ¿ÀÈÄ";
+            timetxt.text = time.ToString() + " ì˜¤í›„";
 
-            if (time >= 12) // ÇÏ·ç°¡ ´Ù Áö³ª°¬À¸¸é
+            if (time >= 12) // í•˜ë£¨ê°€ ë‹¤ ì§€ë‚˜ê°”ìœ¼ë©´
             {
                 isAm = true;
-                //Debug.Log("¿ÀÀü");
+                //Debug.Log("ì˜¤ì „");
                 day++;
-                fileio.Save(); // °ÔÀÓ ¼¼ÀÌºê
+                fileio.Save(); // ê²Œì„ ì„¸ì´ë¸Œ
                 time = 1;
             }
         }
 
-        // Input ¿µ¿ª
-        if (!isCooltime) // ÄğÅ¸ÀÓ ¾È °É·ÈÀ¸¸é
+        // Input ì˜ì—­
+        if (!isCooltime) // ì¿¨íƒ€ì„ ì•ˆ ê±¸ë ¸ìœ¼ë©´
         {
 
-            if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) // ¹° ¾òÀ¸·¯
+            if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) // ë¬¼ ì–»ìœ¼ëŸ¬
             {
                 if(ts.Energy.value >= act_getwater_min[0] && ts.Hunger.value >= act_getwater_min[1] && ts.Moist.value >= act_getwater_min[2] && ts.Hardest.value <= act_getwater_min[3])
                 {
-                    //Debug.Log("¹° ¾òÀ¸·¯");
+                    //Debug.Log("ë¬¼ ì–»ìœ¼ëŸ¬");
                     isGetsWater = true;
                     isCooltime = true;
                     cooltime = act_cooltime[0];
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) // ÆÄ¹Ö
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) // íŒŒë°
             {
                 if (ts.Energy.value >= act_goforgage_min[0] && ts.Hunger.value >= act_goforgage_min[1] && ts.Moist.value >= act_goforgage_min[2] && ts.Hardest.value <= act_goforgage_min[3])
                 {
-                    //Debug.Log("ÆÄ¹Ö");
+                    //Debug.Log("íŒŒë°");
                     isForage = true;
                     isCooltime = true;
                     cooltime = act_cooltime[1];
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) // »ç³É
+            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) // ì‚¬ëƒ¥
             {
                 if (ts.Energy.value >= act_hunt_min[0] && ts.Hunger.value >= act_hunt_min[1] && ts.Moist.value >= act_hunt_min[2] && ts.Hardest.value <= act_hunt_min[3])
                 {
-                    //Debug.Log("»ç³É");
+                    //Debug.Log("ì‚¬ëƒ¥");
                     isHunt = true;
                     isCooltime = true;
                     cooltime = act_cooltime[2];
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // ¸Ô´Â´Ù
+            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // ë¨¹ëŠ”ë‹¤
             {
-                if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // À½½ÄÀÌ ÇÑ´ÜÀ§ ÀÌ»ó ÀÖ´ÂÁö, 
+                if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // ìŒì‹ì´ í•œë‹¨ìœ„ ì´ìƒ ìˆëŠ”ì§€, 
                 {
-                    //Debug.Log("¸Ô´Â´Ù");
+                    //Debug.Log("ë¨¹ëŠ”ë‹¤");
                     isEat = true;
                     isCooltime = true;
                     cooltime = act_cooltime[3];
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // ÄåÄå
+            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // ì½¸ì½¸
             {
-                if(water > 0 && ts.Moist.value < 100f) // ¹°ÀÌ ÃÖ¼ÒÇÑ ¸¸Å­ ÀÖ´ÂÁö, °¥ÁõÀÌ ÀÌ¹Ì ÇØ¼ÒµÇ¾ú´ÂÁö
+                if(water > 0 && ts.Moist.value < 100f) // ë¬¼ì´ ìµœì†Œí•œ ë§Œí¼ ìˆëŠ”ì§€, ê°ˆì¦ì´ ì´ë¯¸ í•´ì†Œë˜ì—ˆëŠ”ì§€
                 {
-                    //Debug.Log("ÄåÄå");
+                    //Debug.Log("ì½¸ì½¸");
                     isDrink = true;
                     isCooltime = true;
                     cooltime = act_cooltime[4];
                 }
             }
 
-            //else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6)) // Àç·á
+            //else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6)) // ì¬ë£Œ
             //{
             //    if (ts.Energy.value >= act_material_min[0] && ts.Hunger.value >= act_material_min[1] && ts.Moist.value >= act_material_min[2])
             //    {
@@ -425,11 +425,11 @@ public class GameManager : MonoBehaviour
                 
             //}
 
-            else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // ÃëÄ§
+            else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // ì·¨ì¹¨
             {
                 if(ts.Hunger.value >= act_sleep_min[1] && ts.Moist.value >= act_sleep_min[2] && ts.Hardest.value > 0)
                 {
-                    //Debug.Log("ÃëÄ§");
+                    //Debug.Log("ì·¨ì¹¨");
                     isSleep = true;
                     isCooltime = true;
                     cooltime = act_cooltime[6];

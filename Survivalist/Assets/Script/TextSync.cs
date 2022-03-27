@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,11 +22,11 @@ public class TextSync : MonoBehaviour
 
     public Text cheattxt;
 
-    /*(ÀúÀå´ë»ó)*/ public Slider Health;
-    /*(ÀúÀå´ë»ó)*/ public Slider Energy;
-    /*(ÀúÀå´ë»ó)*/ public Slider Hunger;
-    /*(ÀúÀå´ë»ó)*/ public Slider Moist;
-    /*(ÀúÀå´ë»ó)*/ public Slider Hardest;
+    /*(ì €ì¥ëŒ€ìƒ)*/ public Slider Health;
+    /*(ì €ì¥ëŒ€ìƒ)*/ public Slider Energy;
+    /*(ì €ì¥ëŒ€ìƒ)*/ public Slider Hunger;
+    /*(ì €ì¥ëŒ€ìƒ)*/ public Slider Moist;
+    /*(ì €ì¥ëŒ€ìƒ)*/ public Slider Hardest;
 
     public GameObject oHealth;
     public GameObject oEnergy;
@@ -73,7 +73,7 @@ public class TextSync : MonoBehaviour
     void Update()
     {
 
-        // Slider ¼öÄ¡°¡ ÀÏÁ¤ ÀÌÇÏ ÀÏ°æ¿ì ±ôºıÀÓ
+        // Slider ìˆ˜ì¹˜ê°€ ì¼ì • ì´í•˜ ì¼ê²½ìš° ê¹œë¹¡ì„
         if (!gm.isCooltime)
         {
             if(Health.value < gm.lowvalue)
@@ -129,7 +129,7 @@ public class TextSync : MonoBehaviour
 
 
 
-        // ÀÚ¿ø txt Ãâ·Â
+        // ìì› txt ì¶œë ¥
         watertxt.text = gm.water.ToString();
         foodtxt.text = gm.food.ToString();
         woodtxt.text = gm.wood.ToString();
@@ -138,18 +138,18 @@ public class TextSync : MonoBehaviour
         leaftxt.text = gm.leaf.ToString();
         rocktxt.text = gm.rock.ToString();
 
-        // »ıÁ¸ÀÏ¼ö txt Ãâ·Â
+        // ìƒì¡´ì¼ìˆ˜ txt ì¶œë ¥
         daytxt.text = gm.day.ToString();
 
-        // Áö±İ ÇÏ°í ÀÖ´Â ÀÏ
+        // ì§€ê¸ˆ í•˜ê³  ìˆëŠ” ì¼
         act_txt.text = gm.nowact;
 
 
         cheattxt.text = 
-            "»ı¸í: " + Health.value + 
-            "\nÃ¼·Â: " + Energy.value + 
-            "\nÆ÷¸¸°¨: " + Hunger.value + 
-            "\n°¥Áõ: " + Moist.value + 
-            "\nÇÇ·Îµµ: " + Hardest.value;
+            "ìƒëª…: " + Health.value + 
+            "\nì²´ë ¥: " + Energy.value + 
+            "\ní¬ë§Œê°: " + Hunger.value + 
+            "\nê°ˆì¦: " + Moist.value + 
+            "\ní”¼ë¡œë„: " + Hardest.value;
     }
 }

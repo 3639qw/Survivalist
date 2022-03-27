@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -69,7 +69,7 @@ public class GameSave : MonoBehaviour
 
     public void Load()
     {
-        // JSON ÆÄÀÏ Æ¯Á¤
+        // JSON íŒŒì¼ íŠ¹ì •
         string path = Application.dataPath + "/Save.json";
         if (File.Exists(path))
         {
@@ -95,7 +95,7 @@ public class GameSave : MonoBehaviour
         }
         else
         {
-            Debug.Log("·ÎµùÇÒ ÆÄÀÏÀÌ ¾ø¾î¿ä");
+            Debug.Log("ë¡œë”©í•  íŒŒì¼ì´ ì—†ì–´ìš”");
         }
     }
 
@@ -118,12 +118,12 @@ public class GameSave : MonoBehaviour
         jsclass.thirst = ts.Moist.value;
         jsclass.hardest = ts.Hardest.value;
 
-        //Json string À¸·Î º¯È¯
+        //Json string ìœ¼ë¡œ ë³€í™˜
         string json = JsonUtility.ToJson(jsclass, true);
-        //json µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ À§Ä¡
+        //json ë°ì´í„°ë¥¼ ì €ì¥í•  ìœ„ì¹˜
         string path = Application.dataPath + "/Save.json";
 
-        //Path ¿¡ Json µ¥ÀÌÅÍ¸¦ ÀúÀå
+        //Path ì— Json ë°ì´í„°ë¥¼ ì €ì¥
         File.WriteAllText(path, json);
         Debug.Log("Saved");
     }
@@ -135,7 +135,7 @@ public class GameSave : MonoBehaviour
 
     public bool Check()
     {
-        // JSON ÆÄÀÏ Æ¯Á¤
+        // JSON íŒŒì¼ íŠ¹ì •
         string path = Application.dataPath + "/Save.json";
         if (File.Exists(path))
         {
@@ -150,6 +150,6 @@ public class GameSave : MonoBehaviour
     public void Delete()
     {
         System.IO.File.Delete(Application.dataPath + "/Save.json");
-        Debug.Log("¼¼ÀÌºê »èÁ¦");
+        Debug.Log("ì„¸ì´ë¸Œ ì‚­ì œ");
     }
 }

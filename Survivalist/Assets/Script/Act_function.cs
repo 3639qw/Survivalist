@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,7 +39,7 @@ public class Act_function : MonoBehaviour
 
 
 
-    public int GetWater(int firewood) // ¹° ¾òÀ¸·¯
+    public int GetWater(int firewood) // ë¬¼ ì–»ìœ¼ëŸ¬
     {
         if (gm.cooltime > 0)
         {
@@ -52,16 +52,16 @@ public class Act_function : MonoBehaviour
             gm.isGetsWater = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int isSuccess = Gacha(0, gm.act_success[0]); // ¼º°ø È®·ü °¡Ã­ ³­¼ö »ı¼º
-            int ran = Gacha(gm.act_getwater_range[0], gm.act_getwater_range[1]); // ¾ÆÀÌÅÛ È¹µæ °¡Ã­ ³­¼ö »ı¼º
+            int isSuccess = Gacha(0, gm.act_success[0]); // ì„±ê³µ í™•ë¥  ê°€ì±  ë‚œìˆ˜ ìƒì„±
+            int ran = Gacha(gm.act_getwater_range[0], gm.act_getwater_range[1]); // ì•„ì´í…œ íšë“ ê°€ì±  ë‚œìˆ˜ ìƒì„±
             
-            if(isSuccess != 0) // 0ÀÌ ¾Æ´Ï¸é ¼º°ø
+            if(isSuccess != 0) // 0ì´ ì•„ë‹ˆë©´ ì„±ê³µ
             {
-                if (ts.Energy.value > (ran * gm.act_getwater[0]) && ts.Hunger.value > (ran * gm.act_getwater[1]) && ts.Moist.value > (ran * gm.act_getwater[2]) && (100 - ts.Hardest.value) > (ran * gm.act_getwater[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (ran * gm.act_getwater[0]) && ts.Hunger.value > (ran * gm.act_getwater[1]) && ts.Moist.value > (ran * gm.act_getwater[2]) && (100 - ts.Hardest.value) > (ran * gm.act_getwater[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // ½ÇÁúÀûÀÎ Å½Çè ¼º°ø
+                    // ì‹¤ì§ˆì ì¸ íƒí—˜ ì„±ê³µ
                     ts.Energy.value -= (ran * gm.act_getwater[0]);
                     ts.Hunger.value -= (ran * gm.act_getwater[1]);
                     ts.Moist.value -= (ran * gm.act_getwater[2]);
@@ -69,23 +69,23 @@ public class Act_function : MonoBehaviour
                 }
                 else
                 {
-                    // ´É·ÂÄ¡ ºÎÁ·
-                    Debug.Log("´É·ÂÄ¡°¡ ¸ğÀÚ¶ó..");
+                    // ëŠ¥ë ¥ì¹˜ ë¶€ì¡±
+                    Debug.Log("ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼..");
                     return 0;
                 }
-                gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+                gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
                 Debug.Log(ran);
             }
-            else if(isSuccess == 0) // 0ÀÌ¸é ½ÇÆĞ
+            else if(isSuccess == 0) // 0ì´ë©´ ì‹¤íŒ¨
             {
-                if (ts.Energy.value > (gm.act_vain[0] * gm.act_getwater[0]) && ts.Hunger.value > (gm.act_vain[0] * gm.act_getwater[1]) && ts.Moist.value > (gm.act_vain[0] * gm.act_getwater[2]) && (100 - ts.Hardest.value) > (gm.act_vain[0] * gm.act_getwater[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (gm.act_vain[0] * gm.act_getwater[0]) && ts.Hunger.value > (gm.act_vain[0] * gm.act_getwater[1]) && ts.Moist.value > (gm.act_vain[0] * gm.act_getwater[2]) && (100 - ts.Hardest.value) > (gm.act_vain[0] * gm.act_getwater[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // Á¤ÇØÁø ÀÓÀÇ°ªÀ¸·Î ¼öÄ¡ °¨¼Ò
+                    // ì •í•´ì§„ ì„ì˜ê°’ìœ¼ë¡œ ìˆ˜ì¹˜ ê°ì†Œ
                     ts.Energy.value -= (gm.act_vain[0] * gm.act_getwater[0]);
                     ts.Hunger.value -= (gm.act_vain[0] * gm.act_getwater[1]);
                     ts.Moist.value -= (gm.act_vain[0] * gm.act_getwater[2]);
                     ts.Hardest.value += (gm.act_vain[0] * gm.act_getwater[3]);
-                    Debug.Log("¸ÁÇÔ");
+                    Debug.Log("ë§í•¨");
                     return 0;
                 }
                 else
@@ -93,12 +93,12 @@ public class Act_function : MonoBehaviour
                     return 0;
                 }
             }
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }
 
-    public int GoForage() // ÆÄ¹Ö
+    public int GoForage() // íŒŒë°
     {
         if (gm.cooltime > 0)
         {
@@ -111,16 +111,16 @@ public class Act_function : MonoBehaviour
             gm.isForage = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int isSuccess = Gacha(0, gm.act_success[1]); // ¼º°ø È®·ü °¡Ã­ ³­¼ö »ı¼º
-            int ran = Gacha(gm.act_goforage_range[0], gm.act_goforage_range[1]); // ¾ÆÀÌÅÛ È¹µæ °¡Ã­ ³­¼ö »ı¼º
+            int isSuccess = Gacha(0, gm.act_success[1]); // ì„±ê³µ í™•ë¥  ê°€ì±  ë‚œìˆ˜ ìƒì„±
+            int ran = Gacha(gm.act_goforage_range[0], gm.act_goforage_range[1]); // ì•„ì´í…œ íšë“ ê°€ì±  ë‚œìˆ˜ ìƒì„±
 
-            if (isSuccess != 0) // 0ÀÌ ¾Æ´Ï¸é ¼º°ø
+            if (isSuccess != 0) // 0ì´ ì•„ë‹ˆë©´ ì„±ê³µ
             {
-                if (ts.Energy.value > (ran * gm.act_goforage[0]) && ts.Hunger.value > (ran * gm.act_goforage[1]) && ts.Moist.value > (ran * gm.act_goforage[2]) && (100 - ts.Hardest.value) > (ran * gm.act_goforage[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (ran * gm.act_goforage[0]) && ts.Hunger.value > (ran * gm.act_goforage[1]) && ts.Moist.value > (ran * gm.act_goforage[2]) && (100 - ts.Hardest.value) > (ran * gm.act_goforage[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // ½ÇÁúÀûÀÎ Å½Çè ¼º°ø
+                    // ì‹¤ì§ˆì ì¸ íƒí—˜ ì„±ê³µ
                     ts.Energy.value -= (ran * gm.act_goforage[0]);
                     ts.Hunger.value -= (ran * gm.act_goforage[1]);
                     ts.Moist.value -= (ran * gm.act_goforage[2]);
@@ -128,23 +128,23 @@ public class Act_function : MonoBehaviour
                 }
                 else
                 {
-                    // ´É·ÂÄ¡ ºÎÁ·
-                    Debug.Log("´É·ÂÄ¡°¡ ¸ğÀÚ¶ó..");
+                    // ëŠ¥ë ¥ì¹˜ ë¶€ì¡±
+                    Debug.Log("ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼..");
                     return 0;
                 }
-                gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+                gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
                 Debug.Log(ran);
             }
-            else if (isSuccess == 0) // 0ÀÌ¸é ½ÇÆĞ
+            else if (isSuccess == 0) // 0ì´ë©´ ì‹¤íŒ¨
             {
-                if (ts.Energy.value > (gm.act_vain[1] * gm.act_goforage[0]) && ts.Hunger.value > (gm.act_vain[1] * gm.act_goforage[1]) && ts.Moist.value > (gm.act_vain[1] * gm.act_goforage[2]) && (100 - ts.Hardest.value) > (gm.act_vain[1] * gm.act_goforage[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (gm.act_vain[1] * gm.act_goforage[0]) && ts.Hunger.value > (gm.act_vain[1] * gm.act_goforage[1]) && ts.Moist.value > (gm.act_vain[1] * gm.act_goforage[2]) && (100 - ts.Hardest.value) > (gm.act_vain[1] * gm.act_goforage[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // Á¤ÇØÁø ÀÓÀÇ°ªÀ¸·Î ¼öÄ¡ °¨¼Ò
+                    // ì •í•´ì§„ ì„ì˜ê°’ìœ¼ë¡œ ìˆ˜ì¹˜ ê°ì†Œ
                     ts.Energy.value -= (gm.act_vain[1] * gm.act_goforage[0]);
                     ts.Hunger.value -= (gm.act_vain[1] * gm.act_goforage[1]);
                     ts.Moist.value -= (gm.act_vain[1] * gm.act_goforage[2]);
                     ts.Hardest.value += (gm.act_vain[1] * gm.act_goforage[3]);
-                    Debug.Log("¸ÁÇÔ");
+                    Debug.Log("ë§í•¨");
                     return 0;
                 }
                 else
@@ -152,16 +152,16 @@ public class Act_function : MonoBehaviour
                     return 0;
                 }
             }
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }
 
-    public int GoHunt(int rock) // »ç³É
+    public int GoHunt(int rock) // ì‚¬ëƒ¥
     {
         if (gm.cooltime > 0)
         {
-            gm.act_sec += Time.deltaTime; // ÀÌº¥Æ® ÃÊ½Ã°è ÀÛµ¿
+            gm.act_sec += Time.deltaTime; // ì´ë²¤íŠ¸ ì´ˆì‹œê³„ ì‘ë™
             gm.cooltime -= Time.deltaTime;
         }
         else if (gm.cooltime <= 0)
@@ -170,16 +170,16 @@ public class Act_function : MonoBehaviour
             gm.isHunt = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int isSuccess = Gacha(0, gm.act_success[2]); // ¼º°ø È®·ü °¡Ã­ ³­¼ö »ı¼º
-            int ran = Gacha(gm.act_hunt_range[0], gm.act_hunt_range[1]); // ¾ÆÀÌÅÛ È¹µæ °¡Ã­ ³­¼ö »ı¼º
+            int isSuccess = Gacha(0, gm.act_success[2]); // ì„±ê³µ í™•ë¥  ê°€ì±  ë‚œìˆ˜ ìƒì„±
+            int ran = Gacha(gm.act_hunt_range[0], gm.act_hunt_range[1]); // ì•„ì´í…œ íšë“ ê°€ì±  ë‚œìˆ˜ ìƒì„±
 
-            if (isSuccess != 0) // 0ÀÌ ¾Æ´Ï¸é ¼º°ø
+            if (isSuccess != 0) // 0ì´ ì•„ë‹ˆë©´ ì„±ê³µ
             {
-                if (ts.Energy.value > (ran * gm.act_hunt[0]) && ts.Hunger.value > (ran * gm.act_hunt[1]) && ts.Moist.value > (ran * gm.act_hunt[2]) && (100 - ts.Hardest.value) > (ran * gm.act_hunt[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (ran * gm.act_hunt[0]) && ts.Hunger.value > (ran * gm.act_hunt[1]) && ts.Moist.value > (ran * gm.act_hunt[2]) && (100 - ts.Hardest.value) > (ran * gm.act_hunt[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // ½ÇÁúÀûÀÎ Å½Çè ¼º°ø
+                    // ì‹¤ì§ˆì ì¸ íƒí—˜ ì„±ê³µ
                     ts.Energy.value -= (ran * gm.act_hunt[0]);
                     ts.Hunger.value -= (ran * gm.act_hunt[1]);
                     ts.Moist.value -= (ran * gm.act_hunt[2]);
@@ -187,23 +187,23 @@ public class Act_function : MonoBehaviour
                 }
                 else
                 {
-                    // ´É·ÂÄ¡ ºÎÁ·
-                    Debug.Log("´É·ÂÄ¡°¡ ¸ğÀÚ¶ó..");
+                    // ëŠ¥ë ¥ì¹˜ ë¶€ì¡±
+                    Debug.Log("ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼..");
                     return 999;
                 }
-                gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+                gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
                 Debug.Log(ran);
             }
-            else if (isSuccess == 0) // 0ÀÌ¸é ½ÇÆĞ
+            else if (isSuccess == 0) // 0ì´ë©´ ì‹¤íŒ¨
             {
-                if (ts.Energy.value > (gm.act_vain[2] * gm.act_hunt[0]) && ts.Hunger.value > (gm.act_vain[2] * gm.act_hunt[1]) && ts.Moist.value > (gm.act_vain[2] * gm.act_hunt[2]) && (100 - ts.Hardest.value) > (gm.act_vain[2] * gm.act_hunt[3])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+                if (ts.Energy.value > (gm.act_vain[2] * gm.act_hunt[0]) && ts.Hunger.value > (gm.act_vain[2] * gm.act_hunt[1]) && ts.Moist.value > (gm.act_vain[2] * gm.act_hunt[2]) && (100 - ts.Hardest.value) > (gm.act_vain[2] * gm.act_hunt[3])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
                 {
-                    // Á¤ÇØÁø ÀÓÀÇ°ªÀ¸·Î ¼öÄ¡ °¨¼Ò
+                    // ì •í•´ì§„ ì„ì˜ê°’ìœ¼ë¡œ ìˆ˜ì¹˜ ê°ì†Œ
                     ts.Energy.value -= (gm.act_vain[2] * gm.act_hunt[0]);
                     ts.Hunger.value -= (gm.act_vain[2] * gm.act_hunt[1]);
                     ts.Moist.value -= (gm.act_vain[2] * gm.act_hunt[2]);
                     ts.Hardest.value += (gm.act_vain[2] * gm.act_hunt[3]);
-                    Debug.Log("¸ÁÇÔ");
+                    Debug.Log("ë§í•¨");
                     return 0;
                 }
                 else
@@ -211,12 +211,12 @@ public class Act_function : MonoBehaviour
                     return 0;
                 }
             }
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }
 
-    public int EatFood(int straw) // ¸Ô°í
+    public int EatFood(int straw) // ë¨¹ê³ 
     {
         if (gm.cooltime > 0)
         {
@@ -229,38 +229,38 @@ public class Act_function : MonoBehaviour
             gm.isEat = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int ran = Gacha(gm.act_eat_range[0], gm.act_eat_range[1]); // À½½ÄÂ÷°¨ È½¼ö °¡Ã­ ³­¼ö »ı¼º
+            int ran = Gacha(gm.act_eat_range[0], gm.act_eat_range[1]); // ìŒì‹ì°¨ê° íšŸìˆ˜ ê°€ì±  ë‚œìˆ˜ ìƒì„±
 
-            if (ts.Moist.value > (ran * gm.act_eatfood[2])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+            if (ts.Moist.value > (ran * gm.act_eatfood[2])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
             {
-                if(gm.food >= ran) // ³­¼öº¸´Ù °®°íÀÖ´Â À½½Ä¼ö ÀûÀ¸¸é ÇöÀç À½½Ä¼ö·Î return
+                if(gm.food >= ran) // ë‚œìˆ˜ë³´ë‹¤ ê°–ê³ ìˆëŠ” ìŒì‹ìˆ˜ ì ìœ¼ë©´ í˜„ì¬ ìŒì‹ìˆ˜ë¡œ return
                 {
                     ts.Moist.value -= (ran * gm.act_eatfood[2]);
                 }
-                else // À½½Ä ¼ö ¹Ì´ŞÀÌ¸é ÃÖ¼Ò¼ö -1 ·Î Â÷°¨
+                else // ìŒì‹ ìˆ˜ ë¯¸ë‹¬ì´ë©´ ìµœì†Œìˆ˜ -1 ë¡œ ì°¨ê°
                 {
-                    Debug.Log("½ÄÇ° ¹Ì´Ş");
+                    Debug.Log("ì‹í’ˆ ë¯¸ë‹¬");
                     ts.Moist.value -= (gm.food * gm.act_eatfood[2]);
                     return gm.food;
                 }
             }
             else
             {
-                // ´É·ÂÄ¡ ºÎÁ·
-                Debug.Log("´É·ÂÄ¡°¡ ¸ğÀÚ¶ó..");
+                // ëŠ¥ë ¥ì¹˜ ë¶€ì¡±
+                Debug.Log("ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼..");
                 return 999;
             }
-            gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+            gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
             Debug.Log(ran);
             
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }
 
-    public int DrinkWater(int straw) // ¸¶½Ã°í
+    public int DrinkWater(int straw) // ë§ˆì‹œê³ 
     {
         if (gm.cooltime > 0)
         {
@@ -273,19 +273,19 @@ public class Act_function : MonoBehaviour
             gm.isDrink = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int ran = Gacha(gm.act_drink_range[0], gm.act_drink_range[1]); // ¾ÆÀÌÅÛ È¹µæ °¡Ã­ ³­¼ö »ı¼º
+            int ran = Gacha(gm.act_drink_range[0], gm.act_drink_range[1]); // ì•„ì´í…œ íšë“ ê°€ì±  ë‚œìˆ˜ ìƒì„±
 
-            gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+            gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
             Debug.Log(ran);
 
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }
 
-    public int GetMat() // ÀÚ¿ø Á¾·ù
+    public int GetMat() // ìì› ì¢…ë¥˜
     {
         int ran = 0;
         if (gm.cooltime > 0)
@@ -299,7 +299,7 @@ public class Act_function : MonoBehaviour
             gm.isMaterial = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
             ran = Random.Range(1, 5);
             gm.act_sec = 0;
@@ -308,7 +308,7 @@ public class Act_function : MonoBehaviour
         return ran;
     }
 
-    public int Sleep() // ÀÜ´Ù
+    public int Sleep() // ì”ë‹¤
     {
         if (gm.cooltime > 0)
         {
@@ -321,33 +321,33 @@ public class Act_function : MonoBehaviour
             gm.isSleep = false;
         }
 
-        if (gm.act_sec >= 1f) // ½ÇÇà
+        if (gm.act_sec >= 1f) // ì‹¤í–‰
         {
-            int ran = Gacha(gm.act_sleep_range[0], gm.act_sleep_range[1]); // ÇÇ·Îµµ Â÷°¨ ¼öÄ¡ °¡Ã­ ³­¼ö »ı¼º
+            int ran = Gacha(gm.act_sleep_range[0], gm.act_sleep_range[1]); // í”¼ë¡œë„ ì°¨ê° ìˆ˜ì¹˜ ê°€ì±  ë‚œìˆ˜ ìƒì„±
 
-            if (ts.Hunger.value > (ran * gm.act_sleep[1]) && ts.Moist.value > (ran * gm.act_sleep[2])) // ´É·Â °¨¼Ò Àü Ã¼Å©
+            if (ts.Hunger.value > (ran * gm.act_sleep[1]) && ts.Moist.value > (ran * gm.act_sleep[2])) // ëŠ¥ë ¥ ê°ì†Œ ì „ ì²´í¬
             {
-                if(ts.Hardest.value < 1) // ÇÇ·Î ´Ù ÇØ¼ÒµÆÀ»¶§
+                if(ts.Hardest.value < 1) // í”¼ë¡œ ë‹¤ í•´ì†Œëì„ë•Œ
                 {
                     return 998;
                 }
                 else if(ts.Hardest.value > 1)
                 {
-                    Debug.Log("¼º°ø");
+                    Debug.Log("ì„±ê³µ");
                     ts.Hunger.value -= (ran * gm.act_sleep[1]);
                     ts.Moist.value -= (ran * gm.act_sleep[2]);
                 }
             }
             else
             {
-                // ´É·ÂÄ¡ ºÎÁ·
-                Debug.Log("´É·ÂÄ¡°¡ ¸ğÀÚ¶ó..");
+                // ëŠ¥ë ¥ì¹˜ ë¶€ì¡±
+                Debug.Log("ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼..");
                 return 999;
             }
-            gm.act_sec = 0; // ÃÊ½Ã°è ÃÊ±âÈ­
+            gm.act_sec = 0; // ì´ˆì‹œê³„ ì´ˆê¸°í™”
             //Debug.Log(ran);
 
-            return ran; // ³­¼ö °ª ¸®ÅÏ
+            return ran; // ë‚œìˆ˜ ê°’ ë¦¬í„´
         }
         return 0;
     }

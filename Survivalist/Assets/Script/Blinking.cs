@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +9,11 @@ public class Blinking : MonoBehaviour
     GameManager gm;
     TextSync ts;
 
-    public GameObject btxt; // ±ô¹ÚÀÌ´Â ¿ÀºêÁ§Æ®
-    public GameObject notentxt; // ´É·ÂÄ¡ ºÎÁ· txt
-    float nontime; // ´É·ÂÄ¡ ºÎÁ· ½Ã°è
-    bool nonfade; // ´É·ÂÄ¡ ºÎÁ· Fade In Out
-    float btime; // ±ô¹ÚÀÓ ½Ã°è
+    public GameObject btxt; // ê¹œë°•ì´ëŠ” ì˜¤ë¸Œì íŠ¸
+    public GameObject notentxt; // ëŠ¥ë ¥ì¹˜ ë¶€ì¡± txt
+    float nontime; // ëŠ¥ë ¥ì¹˜ ë¶€ì¡± ì‹œê³„
+    bool nonfade; // ëŠ¥ë ¥ì¹˜ ë¶€ì¡± Fade In Out
+    float btime; // ê¹œë°•ì„ ì‹œê³„
     bool bfade = true; // Fade In Out
 
     float stime; 

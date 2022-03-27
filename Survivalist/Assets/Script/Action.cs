@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ public class Action : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gm.isCooltime) // ÄğÅ¸ÀÓ °É·ÈÀ»¶§ Çàµ¿°³½Ã
+        if (gm.isCooltime) // ì¿¨íƒ€ì„ ê±¸ë ¸ì„ë•Œ í–‰ë™ê°œì‹œ
         {
 
             if (gm.isGetsWater)
@@ -53,7 +53,7 @@ public class Action : MonoBehaviour
                     gm.food -= i;
                     if (i != 0)
                     {
-                        ts.Hunger.value = Mathf.Clamp(ts.Hunger.value, 0, 100) + (i * gm.act_food_ratio[0]); // Æ÷¸¸°¨ ¼³Á¤
+                        ts.Hunger.value = Mathf.Clamp(ts.Hunger.value, 0, 100) + (i * gm.act_food_ratio[0]); // í¬ë§Œê° ì„¤ì •
                     }
                 }
                 else
@@ -70,7 +70,7 @@ public class Action : MonoBehaviour
                     gm.water -= i;
                     if (i != 0)
                     {
-                        ts.Moist.value = Mathf.Clamp(ts.Moist.value, 0, 100) + (i * gm.act_food_ratio[1]); // °¥Áõ ¼³Á¤
+                        ts.Moist.value = Mathf.Clamp(ts.Moist.value, 0, 100) + (i * gm.act_food_ratio[1]); // ê°ˆì¦ ì„¤ì •
                     }
                 }
             }
@@ -83,10 +83,10 @@ public class Action : MonoBehaviour
             if (gm.isSleep)
             {
                 int i = act.Sleep();
-                if(i == 999) // ´É·ÂÄ¡°¡ ¸ğÀÚ¶ó
+                if(i == 999) // ëŠ¥ë ¥ì¹˜ê°€ ëª¨ìë¼
                 {
                     gm.cooltime -= Time.deltaTime;
-                }else if(i == 998) // ÇÇ·Îµµ ´É·ÂÄ¡ 0±îÁö ÇÏ¶ô ÇßÀ¸¸é 
+                }else if(i == 998) // í”¼ë¡œë„ ëŠ¥ë ¥ì¹˜ 0ê¹Œì§€ í•˜ë½ í–ˆìœ¼ë©´ 
                 {
                     ts.Hardest.value = 0;
                     gm.cooltime -= Time.deltaTime;
