@@ -85,7 +85,7 @@ public class GameSave : MonoBehaviour
             gm.rock = jsclass.rock;
 
             gm.day = jsclass.day;
-            gm.log = jsclass.log;
+            gm.log_index = jsclass.log;
 
             ts.Health.value = jsclass.health;
             ts.Energy.value = jsclass.energy;
@@ -110,7 +110,7 @@ public class GameSave : MonoBehaviour
         jsclass.rock = gm.rock;
 
         jsclass.day = gm.day;
-        jsclass.log = gm.log;
+        jsclass.log = gm.log_index;
 
         jsclass.health = ts.Health.value;
         jsclass.energy = ts.Energy.value;

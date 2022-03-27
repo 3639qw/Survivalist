@@ -61,9 +61,9 @@ public class TextSync : MonoBehaviour
         gm = GameManager.Instance;
 
         Health.value = 100;
-        Energy.value = 40;
-        Hunger.value = 90;
-        Moist.value = 90;
+        Energy.value = 100;
+        Hunger.value = 100;
+        Moist.value = 100;
         Hardest.value = 0;
 
 
