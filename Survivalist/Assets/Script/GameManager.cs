@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     /*(저장대상)*/ protected internal int rock = 0; // 돌
                   
     /*(저장대상)*/ protected internal int day = 1; // 생존한 일수
-    /*(저장대상)*/ protected internal int log_index = 0; // 로그 번호
+    protected internal int log_index = 0; // 로그 번호
 
     // 쿨타임중 행동개시
     protected internal bool isGetsWater; // 물 증류
@@ -265,11 +265,13 @@ public class GameManager : MonoBehaviour
         if(sec >= 3f) // 3초가 한시간
         {
             // 아무것도 안할때 로그 출력
-            int i_log_none = act.Gacha(0, le.log_none.Count - 1);
-            Debug.Log(i_log_none);
-            string ment = le.log_none[i_log_none]; // 로그 list에서 가챠 돌린다.
-            logtxt.text = log_index+1 + ". " + ment + "\n" + logtxt.text;
-            log_index++;
+            if (!isCooltime)
+            {
+                int i_log_none = act.Gacha(0, le.log_none.Count - 1); // 로그 리스트 인덱스 값에서 가챠 난수 생성
+                string ment = le.log_none[i_log_none]; // 난수를 기반으로 string 멘트 산출.
+                logtxt.text = log_index+1 + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                log_index++; // 로그 인덱스 ++
+            }
 
             // 포만감, 갈증에 따라 체력 회복
             if(ts.Energy.value < 100 && !isCooltime)

@@ -2384,7 +2384,6 @@ MonoBehaviour:
     leaf: 0
     rock: 0
     day: 0
-    log: 0
     health: 0
     energy: 0
     hunger: 0
@@ -2931,8 +2930,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -306, y: -50.7}
-  m_SizeDelta: {x: 612, y: 599.8}
+  m_AnchoredPosition: {x: -345.34, y: -50.7}
+  m_SizeDelta: {x: 533.29, y: 599.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349224423
 MonoBehaviour:
@@ -2967,7 +2966,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.5
-  m_Text: 
+  m_Text: "1. 35\uC790\n10. 34\uC790\n100. 34\uC790\n1000. 33\uC790"
 --- !u!222 &1349224424
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class LogEdit : MonoBehaviour
 
     // 쉬는 중... 일때
     protected internal List<string> log_none = new List<string> ();
+    // 쉬는 중... 일때 (밤 일때)
+    protected internal List<string> log_none_night = new List<string> ();
     // 물을 정화중 일때 
     protected internal List<string> log_getwater = new List<string>();
     // 파밍중 일때
@@ -76,6 +78,36 @@ public class LogEdit : MonoBehaviour
         log_none.Add("여기서는 사진 한번 찍어도 괜찮을 것 같다..."); // 10
         log_none.Add("저 구름 모양을 봐."); // 11
         log_none.Add("서서 보는 것도 좀 지루하다."); // 12
+        log_none.Add("모래위에 누워있으니 정말 뜨겁다..."); // 13
+        log_none.Add("해변에 게가 기어 다니는 것이 보인다..."); // 14
+        log_none.Add("저 수평선 너머로 보이는 배는 뭘까."); // 15
+
+        // 밤에 아무것도 안 할때
+        log_none_night.Add("어둠속에서 내가 할 수 있는 일이 있을까..."); // 0
+        log_none_night.Add("저쪽에서 무언가 보인 거 같은데 잘 안 보이는군..."); // 1
+        log_none_night.Add("아무것도 안보이니 일을 하기엔 힘들겠다..."); // 2
+        log_none_night.Add("밤에 해변을 걸어도 될지..."); // 3
+        log_none_night.Add("하늘을 보니 별이 정말 많다."); // 4
+        log_none_night.Add("하늘에서 뭔가 떨어졌는데? 뭐지..."); // 5
+        log_none_night.Add("별이 당장이라도 쏟아질 것 같아."); // 6
+        log_none_night.Add("밤에는 공격을 받아도 방어하기 힘들 것 같다."); // 7
+        log_none_night.Add("밤에는 모래도 정말 차갑다..."); // 8
+        log_none_night.Add("밤이 되니 너무 춥다..."); // 9
+
+        // 물을 정화중 일때
+        log_getwater.Add(""); // 0
+        log_getwater.Add("물이 증발이 잘 안되네 뭐가 문제지? (+1 물)"); // 1
+        log_getwater.Add(""); // 2
+        log_getwater.Add(""); // 3
+        log_getwater.Add(""); // 4
+        log_getwater.Add(""); // 5
+        log_getwater.Add(""); // 6
+        log_getwater.Add(""); // 6
+        log_getwater.Add(""); // 7
+        log_getwater.Add(""); // 8
+        log_getwater.Add(""); // 9
+        log_getwater.Add(""); // 10
+
 
 
         // 매우 피로함
