@@ -66,6 +66,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (ran * gm.act_getwater[1]);
                     ts.Moist.value -= (ran * gm.act_getwater[2]);
                     ts.Hardest.value += (ran * gm.act_getwater[3]);
+                    gm.Log_getWater(ran); // 로그 전송
                 }
                 else
                 {
@@ -125,6 +126,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (ran * gm.act_goforage[1]);
                     ts.Moist.value -= (ran * gm.act_goforage[2]);
                     ts.Hardest.value += (ran * gm.act_goforage[3]);
+                    gm.Log_forgage(ran); // 로그 전송
                 }
                 else
                 {
@@ -184,6 +186,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (ran * gm.act_hunt[1]);
                     ts.Moist.value -= (ran * gm.act_hunt[2]);
                     ts.Hardest.value += (ran * gm.act_hunt[2]);
+                    gm.Log_hunt(ran); // 로그 전송
                 }
                 else
                 {
@@ -233,25 +236,25 @@ public class Act_function : MonoBehaviour
         {
             int ran = Gacha(gm.act_eat_range[0], gm.act_eat_range[1]); // 음식차감 횟수 가챠 난수 생성
 
-            if (ts.Moist.value > (ran * gm.act_eatfood[2])) // 능력 감소 전 체크
-            {
+            //if (ts.Moist.value > (ran * gm.act_eatfood[2])) // 능력 감소 전 체크
+            //{
                 if(gm.food >= ran) // 난수보다 갖고있는 음식수 적으면 현재 음식수로 return
                 {
-                    ts.Moist.value -= (ran * gm.act_eatfood[2]);
+                    //ts.Moist.value -= (ran * gm.act_eatfood[2]);
                 }
                 else // 음식 수 미달이면 최소수 -1 로 차감
                 {
                     Debug.Log("식품 미달");
-                    ts.Moist.value -= (gm.food * gm.act_eatfood[2]);
+                    //ts.Moist.value -= (gm.food * gm.act_eatfood[2]);
                     return gm.food;
                 }
-            }
-            else
-            {
-                // 능력치 부족
-                Debug.Log("능력치가 모자라..");
-                return 999;
-            }
+            //}
+            //else
+            //{
+            //    // 능력치 부족
+            //    Debug.Log("능력치가 모자라..");
+            //    return 999;
+            //}
             gm.act_sec = 0; // 초시계 초기화
             Debug.Log(ran);
             
@@ -276,6 +279,11 @@ public class Act_function : MonoBehaviour
         if (gm.act_sec >= 1f) // 실행
         {
             int ran = Gacha(gm.act_drink_range[0], gm.act_drink_range[1]); // 아이템 획득 가챠 난수 생성
+
+            if(ran > gm.water) // 물이 난수 값보다 작을 경우 자기 자신을 리턴하여 차감
+            {
+                return gm.water;
+            }
 
             gm.act_sec = 0; // 초시계 초기화
             Debug.Log(ran);
@@ -325,8 +333,8 @@ public class Act_function : MonoBehaviour
         {
             int ran = Gacha(gm.act_sleep_range[0], gm.act_sleep_range[1]); // 피로도 차감 수치 가챠 난수 생성
 
-            if (ts.Hunger.value > (ran * gm.act_sleep[1]) && ts.Moist.value > (ran * gm.act_sleep[2])) // 능력 감소 전 체크
-            {
+            //if (ts.Hunger.value > (ran * gm.act_sleep[1]) && ts.Moist.value > (ran * gm.act_sleep[2])) // 능력 감소 전 체크
+            //{
                 if(ts.Hardest.value < 1) // 피로 다 해소됐을때
                 {
                     return 998;
@@ -334,18 +342,18 @@ public class Act_function : MonoBehaviour
                 else if(ts.Hardest.value > 1)
                 {
                     Debug.Log("성공");
-                    ts.Hunger.value -= (ran * gm.act_sleep[1]);
-                    ts.Moist.value -= (ran * gm.act_sleep[2]);
+                    //ts.Hunger.value -= (ran * gm.act_sleep[1]);
+                    //ts.Moist.value -= (ran * gm.act_sleep[2]);
                 }
-            }
-            else
-            {
-                // 능력치 부족
-                Debug.Log("능력치가 모자라..");
-                return 999;
-            }
+            //}
+            //else
+            //{
+            //    // 능력치 부족
+            //    Debug.Log("능력치가 모자라..");
+            //    return 999;
+            //}
             gm.act_sec = 0; // 초시계 초기화
-            //Debug.Log(ran);
+            Debug.Log(ran);
 
             return ran; // 난수 값 리턴
         }

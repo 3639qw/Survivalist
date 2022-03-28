@@ -22,6 +22,13 @@ public class TextSync : MonoBehaviour
 
     public Text cheattxt;
 
+    public Text act_getwater_txt; // 활동 물 txt
+    public Text act_forgage_txt; // 활동 파밍 txt
+    public Text act_hunt_txt; // 활동 사냥 txt
+    public Text act_eatfood_txt; // 활동 식사 txt
+    public Text act_drink_txt; // 활동 음료 txt
+    public Text act_material_txt; // 활동 재료수집 txt
+
     /*(저장대상)*/ public Slider Health;
     /*(저장대상)*/ public Slider Energy;
     /*(저장대상)*/ public Slider Hunger;
@@ -33,6 +40,9 @@ public class TextSync : MonoBehaviour
     public GameObject oHunger;
     public GameObject oMoist;
     public GameObject oHardest;
+
+    public Color minus; // 수치 딸리면
+    public Color current; // 정상
 
     public static TextSync Instance
     {
@@ -52,6 +62,7 @@ public class TextSync : MonoBehaviour
         {
             instance = this;
         }
+
     }
 
 
@@ -63,7 +74,7 @@ public class TextSync : MonoBehaviour
         Health.value = 100;
         Energy.value = 100;
         Hunger.value = 100;
-        Moist.value = 100;
+        Moist.value = 90;
         Hardest.value = 0;
 
 
@@ -73,10 +84,44 @@ public class TextSync : MonoBehaviour
     void Update()
     {
 
-        // Slider 수치가 일정 이하 일경우 깜빡임
         if (!gm.isCooltime)
         {
-            if(Health.value < gm.lowvalue)
+
+            // 수치가 최소량 보다 미달하면 활동 텍스트 알파값 조정
+
+            // 물
+            if (gm.act_getwater_min[0] > Energy.value | gm.act_getwater_min[1] > Hunger.value | gm.act_getwater_min[2] > Moist.value | gm.act_getwater_min[3] < Hardest.value)
+            {
+                act_getwater_txt.color = minus; // 투명화
+            }
+            else
+            {
+                act_getwater_txt.color = current; // 원상 복귀
+            }
+
+            // 파밍
+            if (gm.act_goforgage_min[0] > Energy.value | gm.act_goforgage_min[1] > Hunger.value | gm.act_goforgage_min[2] > Moist.value | gm.act_goforgage_min[3] < Hardest.value)
+            {
+                act_forgage_txt.color = minus; // 투명화
+            }
+            else
+            {
+                act_forgage_txt.color = current; // 원상 복귀
+            }
+
+            // 사냥
+            if (gm.act_hunt_min[0] > Energy.value | gm.act_hunt_min[1] > Hunger.value | gm.act_hunt_min[2] > Moist.value | gm.act_hunt_min[3] < Hardest.value)
+            {
+                act_hunt_txt.color = minus; // 투명화
+            }
+            else
+            {
+                act_hunt_txt.color = current; // 원상 복귀
+            }
+
+
+            // Slider 수치가 일정 이하 일경우 깜빡임
+            if (Health.value < gm.lowvalue)
             {
                 Blinking.Instance.SliderBlink(oHealth);
             }
@@ -139,7 +184,7 @@ public class TextSync : MonoBehaviour
         rocktxt.text = gm.rock.ToString();
 
         // 생존일수 txt 출력
-        daytxt.text = gm.day.ToString();
+        daytxt.text = "생존 " + gm.day.ToString() + "일차";
 
         // 지금 하고 있는 일
         act_txt.text = gm.nowact;

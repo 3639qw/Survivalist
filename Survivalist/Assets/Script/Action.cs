@@ -64,14 +64,19 @@ public class Action : MonoBehaviour
 
             if (gm.isDrink)
             {
-                int i = act.DrinkWater(0);
-                if (gm.water >= i)
+                int i = 0;
+                
+                if(ts.Moist.value < 100) // 현재 수분감이 100 이하일 때만 작동 
                 {
-                    gm.water -= i;
-                    if (i != 0)
-                    {
-                        ts.Moist.value = Mathf.Clamp(ts.Moist.value, 0, 100) + (i * gm.act_food_ratio[1]); // 갈증 설정
-                    }
+                    i = act.DrinkWater(0);
+                }
+                gm.water -= i;
+                if (i != 0) // 채울 수분이 아직 남았을때
+                {
+                    ts.Moist.value = Mathf.Clamp(ts.Moist.value, 0, 100) + (i * gm.act_food_ratio[1]); // 갈증 설정
+                }else if(i == 0) // 수분감이 이미 다 찼을때
+                {
+                    gm.cooltime -= Time.deltaTime; // 그냥 시간만 까먹는다
                 }
             }
 

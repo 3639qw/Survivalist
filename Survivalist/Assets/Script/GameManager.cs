@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     //-------------------
 
 
-    int time = 6; // 월드 시간 (오전 6시)
+    int time = 1; // 월드 시간 (오전 12시 == 0시)
     bool isAm = true; // 시간이 오전인지 여부
 
 
@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
     protected internal float[] act_getwater = new float[] {1.2f, 1.0f, .3f, .8f}; // 물
     protected internal float[] act_goforage = new float[] {1.2f, .6f, 0.8f, 1.0f}; // 파밍
     protected internal float[] act_hunt = new float[] {.4f, .3f, .35f, .35f}; // 사냥
-    protected internal float[] act_eatfood = new float[] {0, 0, .07f };  // 식사
+    protected internal float[] act_eatfood = new float[] {0, 0, .07f };  // 식사 -- 일시적으로 무력화됨 
     protected internal float[] act_material = new float[] {.2f, .2f, .2f, .2f }; // 재료
-    protected internal float[] act_sleep = new float[] { 0, .07f, .1f }; // 취침
+    protected internal float[] act_sleep = new float[] { 0, .07f, .1f }; // 취침 -- 일시적으로 무력화됨
 
     // 활동시 난수값 0 나왔을때 (허탕쳤을때) 능력치 임의 값으로 감소
     // 0: 물, 1. 파밍, 2. 사냥, 3. 재료 
@@ -98,12 +98,12 @@ public class GameManager : MonoBehaviour
     protected internal int[] act_material_range = new int[] { 1, 10 }; // 재료
     protected internal int[] act_sleep_range = new int[] { 1, 5 }; // 취침
 
-    // 활동시 필요한 최소한의 수치
+    // 활동시 필요한 최소한의 수치 -- 피로도는 현재치가 프리셋 이상일 경우
     // 0: 물, 1: 파밍, 2: 사냥, 3: 먹는다, 4: 재료
     // 0: 에너지, 1: 포만감, 2: 촉촉함, 3: 피로도
     protected internal float[] act_getwater_min = new float[] {1, 1, 1, 99}; // 물
     protected internal float[] act_goforgage_min = new float[] {3, 3, 3, 80}; // 파밍
-    protected internal float[] act_hunt_min = new float[] {5, 5, 5, 70}; // 사냥
+    protected internal float[] act_hunt_min = new float[] {5, 5, 5, 80}; // 사냥
     protected internal float[] act_eatfood_min = new float[] {0, 0, 1 }; // 먹는다
     protected internal float[] act_material_min = new float[] { }; // 재료
     protected internal float[] act_sleep_min = new float[] {0, 1, 1}; // 취침
@@ -180,12 +180,10 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
         fileio = GameSave.Instance;
         act = Act_function.Instance;
         ts = TextSync.Instance;
         le = LogEdit.Instance;
-        
     }
 
     void Start()
@@ -238,6 +236,7 @@ public class GameManager : MonoBehaviour
         }
 
 
+
         // 쿨타임없을때 할 일을 선택하세요
         if (isCooltime)
         {
@@ -249,28 +248,77 @@ public class GameManager : MonoBehaviour
         }
 
 
-
+        // 행동을 하고 있어 쿨타임이 있을때에는 쿨타임 표시
         if (isCooltime && cooltime > 0)
         {
             cooltimetxt.text = Mathf.CeilToInt(cooltime).ToString() + "초)";
         }
-        else
+        else // 쿨타임 없으면 없다고 표시
         {
             cooltimetxt.text = "없음)";
             act_sec = 0; // 이벤트 초시계 초기화
         }
 
-        sec += Time.deltaTime; // 초시계
-
-        if(sec >= 3f) // 3초가 한시간
+        
+        sec += (Time.deltaTime * 2); // 초시계
+        if (sec >= 3f) // 3초가 한시간 -- 2를 곱했기 때문에 1.5초가 한시간
         {
-            // 아무것도 안할때 로그 출력
+            if (time == 12) // 12에서 13으로 넘어가지 않고 1로 리턴
+            {
+                time = 1;
+            }
+            else
+            {
+                time++;
+                if (time == 12) // 12시에 이르면
+                {
+                    if (isAm) // 오전 11시 에서 오후 12시로 넘어갈 때
+                    {
+                        isAm = false; // 오후로 전환
+                    }
+                    else if (!isAm) // 오후 11시 에서 오전 12시로 넘어갈 때
+                    {
+                        isAm = true; // 오전으로 전환
+                        day++; // 생존일 +1
+                        fileio.Save(); // 게임 저장
+                    }
+                }
+            }
+
             if (!isCooltime)
             {
-                int i_log_none = act.Gacha(0, le.log_none.Count - 1); // 로그 리스트 인덱스 값에서 가챠 난수 생성
-                string ment = le.log_none[i_log_none]; // 난수를 기반으로 string 멘트 산출.
-                logtxt.text = log_index+1 + ". " + ment + "\n" + logtxt.text; // 멘트 출력
-                log_index++; // 로그 인덱스 ++
+                
+                if((time >= 9 && !isAm && time != 12) | (time <= 5 | time == 12 && isAm)) // 밤시간 (오후 9 ~ 오전 5) 밤 전용 로그 출력
+                {
+                    // 아무것도 안할때 밤 로그 출력
+                    int i_log_none = act.Gacha(0, le.log_none_night.Count - 1); // 로그 리스트 인덱스 값에서 가챠 난수 생성
+                    string ment = le.log_none_night[i_log_none]; // 난수를 기반으로 string 멘트 산출.
+                    logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                    log_index++; // 로그 인덱스 ++
+                    Debug.Log("밤");
+
+                }
+                else
+                {
+                    // 아무것도 안할때 로그 출력
+                    int i_log_none = act.Gacha(0, le.log_none.Count - 1); // 로그 리스트 인덱스 값에서 가챠 난수 생성
+                    string ment = le.log_none[i_log_none]; // 난수를 기반으로 string 멘트 산출.
+                    logtxt.text = (log_index+1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                    log_index++; // 로그 인덱스 ++
+                    Debug.Log("낮");
+
+                }
+
+                
+                // 안자고 일만하니까 강제로 자
+                if(ts.Hardest.value > 90)
+                {
+                    isSleep = true;
+                    isCooltime = true;
+                    cooltime = act_cooltime[6];
+                }
+
+
             }
 
             // 포만감, 갈증에 따라 체력 회복
@@ -333,35 +381,17 @@ public class GameManager : MonoBehaviour
 
             } // if(energy < 100 && !isCooltime)
 
-            time++;
+            
             sec = 0;
         }
 
-        sec += Time.deltaTime; // 초시계
-
         if (isAm) // 오전
         {
-            timetxt.text = time.ToString() + " 오전";
-
-            if (time >= 12)
-            {
-                isAm = false;
-                //Debug.Log("오후");
-                time = 1;
-            }
+            timetxt.text = "오전 " + time.ToString() + "시";
         }
         else if (!isAm) // 오후
         {
-            timetxt.text = time.ToString() + " 오후";
-
-            if (time >= 12) // 하루가 다 지나갔으면
-            {
-                isAm = true;
-                //Debug.Log("오전");
-                day++;
-                fileio.Save(); // 게임 세이브
-                time = 1;
-            }
+            timetxt.text = "오후 " + time.ToString() + "시";
         }
 
         // Input 영역
@@ -403,13 +433,13 @@ public class GameManager : MonoBehaviour
 
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // 먹는다
             {
-                if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // 음식이 한단위 이상 있는지, 
-                {
+                //if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // 음식이 한단위 이상 있는지, 
+                //{
                     //Debug.Log("먹는다");
                     isEat = true;
                     isCooltime = true;
                     cooltime = act_cooltime[3];
-                }
+                //}
             }
 
             else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // 콸콸
@@ -436,18 +466,44 @@ public class GameManager : MonoBehaviour
 
             else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // 취침
             {
-                if(ts.Hunger.value >= act_sleep_min[1] && ts.Moist.value >= act_sleep_min[2] && ts.Hardest.value > 0)
-                {
+                //if(ts.Hunger.value >= act_sleep_min[1] && ts.Moist.value >= act_sleep_min[2] && ts.Hardest.value > 0)
+                //{
                     //Debug.Log("취침");
                     isSleep = true;
                     isCooltime = true;
                     cooltime = act_cooltime[6];
-                }
+                //}
             }
 
         }
 
     }
+
+    // 물 생산 로그 전송
+    public void Log_getWater(int amount)
+    {
+        string ment = le.log_getwater[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+        log_index++; // 로그 인덱스 ++
+    }
+
+    // 파밍 로그 전송
+    public void Log_forgage(int amount)
+    {
+        string ment = le.log_forgage[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+        log_index++; // 로그 인덱스 ++
+    }
+
+    // 사냥 로그 전송
+    public void Log_hunt(int amount)
+    {
+        string ment = le.log_hunt[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+        log_index++; // 로그 인덱스 ++
+    }
+
+
 
 
 }

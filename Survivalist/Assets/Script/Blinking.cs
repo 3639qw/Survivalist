@@ -81,7 +81,7 @@ public class Blinking : MonoBehaviour
         stime += Time.deltaTime;
         if (sfade)
         {
-            if (stime >= .25f)
+            if (stime >= .5f)
             {
                 sfade = false;
                 stime = 0;

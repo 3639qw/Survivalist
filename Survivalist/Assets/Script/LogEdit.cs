@@ -96,51 +96,40 @@ public class LogEdit : MonoBehaviour
 
         // 물을 정화중 일때
         log_getwater.Add(""); // 0
-        log_getwater.Add("물이 증발이 잘 안되네 뭐가 문제지? (+1 물)"); // 1
-        log_getwater.Add(""); // 2
-        log_getwater.Add(""); // 3
-        log_getwater.Add(""); // 4
-        log_getwater.Add(""); // 5
-        log_getwater.Add(""); // 6
-        log_getwater.Add(""); // 6
-        log_getwater.Add(""); // 7
-        log_getwater.Add(""); // 8
-        log_getwater.Add(""); // 9
-        log_getwater.Add(""); // 10
+        log_getwater.Add("(+1 물)"); // 1
+        log_getwater.Add("(+2 물)"); // 2
+        log_getwater.Add("(+3 물)"); // 3
+        log_getwater.Add("(+4 물)"); // 4
+        log_getwater.Add("(+5 물)"); // 5
+        log_getwater.Add("(+6 물)"); // 6
+        log_getwater.Add("(+7 물)"); // 7
+        log_getwater.Add("(+8 물)"); // 8
+        log_getwater.Add("(+9 물)"); // 9
+        log_getwater.Add("(+10 물)"); // 10
 
+        // 파밍중 일때
+        log_forgage.Add(""); // 0
+        log_forgage.Add("(+1 음식)"); // 1
+        log_forgage.Add("(+2 음식)"); // 2
+        log_forgage.Add("(+3 음식)"); // 3
+        log_forgage.Add("(+4 음식)"); // 4
 
+        // 사냥중 일때
+        log_hunt.Add(""); // 0
+        log_hunt.Add(""); // 1
+        log_hunt.Add(""); // 2
+        log_hunt.Add(""); // 3
+        log_hunt.Add("(+4 음식)"); // 4
+        log_hunt.Add("(+5 음식)"); // 5
+        log_hunt.Add("(+6 음식)"); // 6
+        log_hunt.Add("(+7 음식)"); // 7
+        log_hunt.Add("(+8 음식)"); // 8
+        log_hunt.Add("(+9 음식)"); // 9
+        log_hunt.Add("(+10 음식)"); // 10
 
         // 매우 피로함
         log_tired.Add("너무 피곤해서 제대로 쉴 수가 없다");
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
