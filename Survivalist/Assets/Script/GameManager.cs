@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     /* 지역변수화 전역변수 */
     protected internal float act_sec; // 행동할때 체크하는 초시계
 
-    //-------------------
+    //---------------------
 
 
     int time = 1; // 월드 시간 (오전 12시 == 0시)
@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
 
 
     //---------------------------------------------------------------------------
-
     // 프리셋 변수
     // 행동별 쿨타임 프리셋
     // 0: 물, 1: 파밍, 2: 사냥, 3: 먹는다, 4: 마신다, 5: 재료, 6: 취침
@@ -100,8 +99,8 @@ public class GameManager : MonoBehaviour
     // 아이템 갯수 가챠 바운더리
     // 0: 물, 1: 파밍, 2: 사냥, 3: 먹는다, 4: 마신다, 5: 재료, 6: 취침
     // 0번인덱스부터 시작하여 1번인덱스까지 난수기 삽입
-    protected internal int[] act_getwater_range = new int[] { 1, 10 }; // 물
-    protected internal int[] act_goforage_range = new int[] { 1, 4 }; // 파밍
+    protected internal int[] act_getwater_range = new int[] { 5, 10 }; // 물
+    protected internal int[] act_goforage_range = new int[] { 3, 4 }; // 파밍
     protected internal int[] act_hunt_range = new int[] { 4, 10 }; // 사냥
     protected internal int[] act_eat_range = new int[] { 1, 10 }; // 식사
     protected internal int[] act_drink_range = new int[] { 1, 10 }; // 콸콸
@@ -110,9 +109,9 @@ public class GameManager : MonoBehaviour
 
     // 피로도 누적으로 인한 능률 저하시 가챠 바운더리
     // 0: 물, 1: 파밍, 2: 사냥, 3: 재료
-    protected internal int[] act_hard_getwater_range = new int[] {1, 5};
+    protected internal int[] act_hard_getwater_range = new int[] {1, 4};
     protected internal int[] act_hard_forgage_range = new int[] {1, 2};
-    protected internal int[] act_hard_hunt_range = new int[] {2, 6};
+    protected internal int[] act_hard_hunt_range = new int[] {2, 5};
     protected internal int[] act_hard_material_range = new int[] {1, 5};
 
     // 피로도가 해당 값 이상 일경우 능률 저하
@@ -134,6 +133,10 @@ public class GameManager : MonoBehaviour
     // (음식수 * 변수값) 계산식으로 수치 상승
     protected internal float[] act_food_ratio = new float[] {.7f, 1.0f };
 
+    // 평시에 아무것도 안해서 까는 수치값
+    // 0: 포만감, 1: 수분
+    protected internal float[] none_minus = new float[] { .5f, .8f };
+
     // Slider 가 해당 값 미만 일경우 깜박거림
     protected internal float lowvalue = 20;
 
@@ -144,46 +147,23 @@ public class GameManager : MonoBehaviour
     protected internal int event_injury_chance = 10;
 
     // 이벤트 (부상) 까는 생명수치 바운더리
-    protected internal int[] event_injury_range = new int[] {3, 10}; 
+    protected internal int[] event_injury_range = new int[] {3, 10};
+
+    // 이벤트 (습격) 가챠 확률 (숫자만큼 난수기 삽입)
+    protected internal int ev_attack_chance = 1;
+
+    // 이벤트 (습격) 까는 생명수치 바운더리
+    protected internal int[] ev_attack_range = new int[] { 5, 15 };
+
+    // 이벤트 (습격) 시 돌을 가지고 있을경우 피할 수 있는데 필요한 돌의 양
+    // (까이는피 * 필요한 돌의 양) 계산식
+    protected internal int ev_attack_defence_am = 1;
 
     //---------------------------------------------------------------------------
 
-    /* 행동별 쿨타임
-     * 
-     * 1. 물: 5초 
-     * 2. 파밍: 9초
-     * 3. 사냥: 15초
-     * 4. 먹는다: 5초
-     * 5. 마신다: 5초
-     * 6. 재료: 20초
-     * 7. 취침: 10초
-     */
-
-    /* 행동별 필요한 재료 or 스킬
-     * 
-     * 1. 물: 나무, 짚, 나뭇잎 (왼쪽으로 갈수록 많은 물을 얻을 수 있음) | 체력---, 허기--, 갈증-
-     * 2. 파밍:   | 체력--, 허기---, 갈증-
-     * 3. 사냥: 돌(선택사항, 있으면 식량획득 확률증가) | 체력---, 허기---, 갈증--
-     * 4. 먹는다: 짚(선택사항, 있으면 식중독 확률낮춤) | 허기+++, 갈증-
-     * 5. 마신다: 짚(선택사항, 있으면 수인성 전염병 감염 확률낮춤) | 갈증 +++
-     * 6. 재료:  | 체력--, 허기-, 갈증-
-     * 7. 취침: 확률에 따라 야생동물에 습격을 받아 생명 깍일수 있음
-     */
-
-
-    /* 수치별 상승 요인
-     * 
-     * 1. 생명: 체력, 포만감, 수분감, 피로도에 따라 자연 상승 (단 자연적으로는 60이상 상승 불가)
-     * 2. 체력: 포만감, 수분감, 피로도에 따라 자연 상승
-     * 3. 포만감: 밥 많이 먹으면 
-     * 4. 수분감: 물 많이 마셔
-     * 5. 피로도: 잠 많이 자
-     */
 
     /* 자원별 용도
      * 
-     * 1. 물: 갈증 해결
-     * 2. 음식: 허기 해결
      * 3. 나무: 물 획득수 ++
      * 4. 가죽: 추운 날씨의 영향을 적게 받을 수 있음
      * 5. 짚: 물 획득수 +
@@ -321,6 +301,12 @@ public class GameManager : MonoBehaviour
 
             if (!isCooltime)
             {
+
+                // 아무것도 안 하고 있으면 포만감, 수분 깐다
+                ts.Hunger.value -= none_minus[0]; // 포만감 감소
+                ts.Moist.value -= none_minus[1]; // 수분 감소
+                
+                
                 
                 
                 if((time >= 9 && !isAm && time != 12) | (time <= 5 | time == 12 && isAm)) // 밤시간 (오후 9 ~ 오전 5) 밤 전용 로그 출력
@@ -330,8 +316,6 @@ public class GameManager : MonoBehaviour
                     string ment = le.log_none_night[i_log_none]; // 난수를 기반으로 string 멘트 산출.
                     logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
                     log_index++; // 로그 인덱스 ++
-                    Debug.Log("밤");
-
                 }
                 else
                 {
@@ -340,42 +324,84 @@ public class GameManager : MonoBehaviour
                     string ment = le.log_none[i_log_none]; // 난수를 기반으로 string 멘트 산출.
                     logtxt.text = (log_index+1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
                     log_index++; // 로그 인덱스 ++
-                    Debug.Log("낮");
-
                 }
 
-                // 이벤트 (부상)
-                int i_injury_chance = act.Gacha(0, event_injury_chance); // 부상 걸리는지 여부 결정
-                Debug.Log(i_injury_chance);
-                if(i_injury_chance == 0) // 부상 걸렸으면 깔 생명 양 결정
+
+                // 이벤트 부상, 습격 종류 결정
+                // 1 ~ 5 : 부상, 6 ~ 10 : 습격
+                int event_kindof = act.Gacha(1, 10);
+                if(event_kindof < 6) 
                 {
-                    int i_injury_health = act.Gacha(event_injury_range[0], event_injury_range[1]);
-                    if(ts.Health.value > i_injury_health) // 현재 생명수치가 더 많을 경우
+                    // 이벤트 (부상)
+                    int i_injury_chance = act.Gacha(0, event_injury_chance); // 부상 걸리는지 여부 결정
+                    if(i_injury_chance == 0) // 부상 걸렸으면 깔 생명 양 결정
                     {
-                        ts.Health.value -= i_injury_health; // 생명 깍고
+                        int i_injury_health = act.Gacha(event_injury_range[0], event_injury_range[1]);
+                        if(ts.Health.value > i_injury_health) // 현재 생명수치가 더 많을 경우
+                        {
+                            ts.Health.value -= i_injury_health; // 생명 깍고
 
-                        // 부상 로그 출력
-                        string ment = "이벤트: 부상 (-" + i_injury_health + ")";
-                        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
-                        log_index++; // 로그 인덱스 ++
+                            // 부상 로그 출력
+                            string ment = "이벤트: 부상 (-" + i_injury_health + " 건강)";
+                            logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                            log_index++; // 로그 인덱스 ++
 
 
-                    }
-                    else // 현재 생명수치가 더 적을 경우 == 사먕
+                        }
+                        else // 현재 생명수치가 더 적을 경우 == 사망
+                        {
+                            ts.Health.value = 0;
+                            // 부상 로그 출력
+                            string ment = "이벤트: 부상 (-" + i_injury_health + ") \n 사망..";
+                            logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                            isCooltime = true;
+                            log_index++; // 로그 인덱스 ++
+                        }
+
+                    } // if(i_injury_chance == 0)
+                } // if(event_kindof > 5)
+                else
+                {
+                    // 이벤트 (습격)
+                    int i_attack_chance = act.Gacha(0, ev_attack_chance); // 부상 걸리는지 여부 결정
+                    if (i_attack_chance == 0) // 부상 걸렸으면 깔 생명 결정
                     {
-                        ts.Health.value = 0;
-                        // 부상 로그 출력
-                        string ment = "이벤트: 부상 (-" + i_injury_health + ") \n 사망..";
-                        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
-                        isCooltime = true;
-                        log_index++; // 로그 인덱스 ++
-                    }
+                        int i_attack_health = act.Gacha(ev_attack_range[0], ev_attack_range[1]);
+                        if(rock >= (i_attack_health * ev_attack_defence_am)) // 돌로 막을수 있을 경우
+                        {
+                            // 막았다
+                            string ment = "이벤트: 돌로 습격을 막았다 (-" + (i_attack_health * ev_attack_defence_am) + " 돌)";
+                            logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                            rock -= (i_attack_health * ev_attack_defence_am); // 돌 차감
+                            log_index++; // 로그 인덱스 ++
+                        }
+                        else
+                        {
+                            if (ts.Health.value > i_attack_health) // 현재 생명수치가 더 많을 경우
+                            {
+                                ts.Health.value -= i_attack_health; // 생명 깍고
 
-                }
+                                // 부상 로그 출력
+                                string ment = "이벤트: 습격 (-" + i_attack_health + " 건강)";
+                                logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                                log_index++; // 로그 인덱스 ++
+                            }
+                            else // 현재 생명수치가 더 적을 경우 == 사망
+                            {
+                                ts.Health.value = 0;
+                                string ment = "이벤트: 습격 (-" + i_attack_health + ") \n 사망..";
+                                logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                                log_index++; // 로그 인덱스 ++
+                            }
+                        }
+                    } // if (i_attack_chance == 0)
+                } // if(event_kindof < 6) else
 
-                
+
+
+
                 // 안자고 일만하니까 강제로 자
-                if(ts.Hardest.value >= act_force_sleep)
+                if (ts.Hardest.value >= act_force_sleep)
                 {
                     isSleep = true;
                     isCooltime = true;
@@ -464,7 +490,7 @@ public class GameManager : MonoBehaviour
     // 물 생산 로그 전송
     public void Log_getWater(int amount)
     {
-        string ment = le.log_getwater[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        string ment = "(+" + amount + " 물)"; // 얻은 자원 갯수 기반으로 string 멘트 산출.
         logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
         log_index++; // 로그 인덱스 ++
     }
@@ -472,7 +498,7 @@ public class GameManager : MonoBehaviour
     // 파밍 로그 전송
     public void Log_forgage(int amount)
     {
-        string ment = le.log_forgage[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        string ment = "(+" + amount + " 음식)"; // 얻은 자원 갯수 기반으로 string 멘트 산출.
         logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
         log_index++; // 로그 인덱스 ++
     }
@@ -480,7 +506,7 @@ public class GameManager : MonoBehaviour
     // 사냥 로그 전송
     public void Log_hunt(int amount)
     {
-        string ment = le.log_hunt[amount]; // 얻은 자원 갯수 기반으로 string 멘트 산출.
+        string ment = "(+" + amount + " 음식)"; // 얻은 자원 갯수 기반으로 string 멘트 산출.
         logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
         log_index++; // 로그 인덱스 ++
     }

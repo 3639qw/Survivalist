@@ -44,6 +44,8 @@ public class TextSync : MonoBehaviour
     public Color minus; // 수치 딸리면
     public Color current; // 정상
 
+    public Color hardesttxt_color; // 행동별로 능률 저하에 해당될경우 행동 텍스트 색 조정
+
     public static TextSync Instance
     {
         get
@@ -87,13 +89,15 @@ public class TextSync : MonoBehaviour
 
         if (!gm.isCooltime)
         {
-
             // 수치가 최소량 보다 미달하면 활동 텍스트 알파값 조정
-
             // 물
             if (gm.act_getwater_min[0] > Energy.value | gm.act_getwater_min[1] > Hunger.value | gm.act_getwater_min[2] > Moist.value | gm.act_getwater_min[3] < Hardest.value)
             {
                 act_getwater_txt.color = minus; // 투명화
+            }
+            else if(gm.act_hardest_decline[0] <= Hardest.value) // 행동별로 능률저하에 해당될경우 색 조정
+            {
+                act_getwater_txt.color = hardesttxt_color;
             }
             else
             {
@@ -105,6 +109,10 @@ public class TextSync : MonoBehaviour
             {
                 act_forgage_txt.color = minus; // 투명화
             }
+            else if (gm.act_hardest_decline[1] <= Hardest.value) // 행동별로 능률저하에 해당될경우 색 조정
+            {
+                act_forgage_txt.color = hardesttxt_color;
+            }
             else
             {
                 act_forgage_txt.color = current; // 원상 복귀
@@ -114,6 +122,9 @@ public class TextSync : MonoBehaviour
             if (gm.act_hunt_min[0] > Energy.value | gm.act_hunt_min[1] > Hunger.value | gm.act_hunt_min[2] > Moist.value | gm.act_hunt_min[3] < Hardest.value)
             {
                 act_hunt_txt.color = minus; // 투명화
+            }else if(gm.act_hardest_decline[2] <= Hardest.value) // 행동별로 능률저하에 해당될경우 색 조정
+            {
+                act_hunt_txt.color = hardesttxt_color;
             }
             else
             {

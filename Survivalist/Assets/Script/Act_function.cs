@@ -58,13 +58,13 @@ public class Act_function : MonoBehaviour
             int ran = 0; // 아이템 획득 가챠 난수
 
             // 과도하게 피로할 경우 능률 저하
-            if (gm.act_hardest_decline[0] >= ts.Hardest.value)
+            if (gm.act_hardest_decline[0] <= ts.Hardest.value)
             {
                 ran = Gacha(gm.act_hard_getwater_range[0], gm.act_hard_getwater_range[1]); // 능률 저하에 따른 가챠 난수 생성
+                Debug.Log("물 능률저하중...");
             }
             else
             {
-                Debug.Log("물 능률저하중...");
                 ran = Gacha(gm.act_getwater_range[0], gm.act_getwater_range[1]); // 피로도가 정상일 경우 정상 가챠 난수 생성
             }
 
@@ -127,7 +127,18 @@ public class Act_function : MonoBehaviour
         if (gm.act_sec >= 1f) // 실행
         {
             int isSuccess = Gacha(0, gm.act_success[1]); // 성공 확률 가챠 난수 생성
-            int ran = Gacha(gm.act_goforage_range[0], gm.act_goforage_range[1]); // 아이템 획득 가챠 난수 생성
+            int ran = 0; // 아이템 획득 가챠 난수 생성
+
+            // 과도하게 피로할 경우 능률 저하
+            if (gm.act_hardest_decline[1] <= ts.Hardest.value)
+            {
+                ran = Gacha(gm.act_hard_forgage_range[0], gm.act_hard_forgage_range[1]); // 능률 저하에 따른 가챠 난수 생성
+                Debug.Log("파밍 능률저하중...");
+            }
+            else
+            {
+                ran = Gacha(gm.act_goforage_range[0], gm.act_goforage_range[1]); // 피로도가 정상일 경우 정상 가챠 난수 생성
+            }
 
             if (isSuccess != 0) // 0이 아니면 성공
             {

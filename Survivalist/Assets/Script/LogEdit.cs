@@ -81,6 +81,7 @@ public class LogEdit : MonoBehaviour
         log_none.Add("모래위에 누워있으니 정말 뜨겁다..."); // 13
         log_none.Add("해변에 게가 기어 다니는 것이 보인다..."); // 14
         log_none.Add("저 수평선 너머로 보이는 배는 뭘까."); // 15
+        log_none.Add("수평선 너머로 배가 지나간다..."); // 16
 
         // 밤에 아무것도 안 할때
         log_none_night.Add("어둠속에서 내가 할 수 있는 일이 있을까..."); // 0
@@ -93,39 +94,16 @@ public class LogEdit : MonoBehaviour
         log_none_night.Add("밤에는 공격을 받아도 방어하기 힘들 것 같다."); // 7
         log_none_night.Add("밤에는 모래도 정말 차갑다..."); // 8
         log_none_night.Add("밤이 되니 너무 춥다..."); // 9
+        log_none_night.Add("밤에 정신을 잃으면 어떻하지..."); // 10
+        log_none_night.Add("너무 춥다..."); // 11
 
         // 물을 정화중 일때
-        log_getwater.Add(""); // 0
-        log_getwater.Add("(+1 물)"); // 1
-        log_getwater.Add("(+2 물)"); // 2
-        log_getwater.Add("(+3 물)"); // 3
-        log_getwater.Add("(+4 물)"); // 4
-        log_getwater.Add("(+5 물)"); // 5
-        log_getwater.Add("(+6 물)"); // 6
-        log_getwater.Add("(+7 물)"); // 7
-        log_getwater.Add("(+8 물)"); // 8
-        log_getwater.Add("(+9 물)"); // 9
-        log_getwater.Add("(+10 물)"); // 10
 
         // 파밍중 일때
-        log_forgage.Add(""); // 0
-        log_forgage.Add("(+1 음식)"); // 1
-        log_forgage.Add("(+2 음식)"); // 2
-        log_forgage.Add("(+3 음식)"); // 3
-        log_forgage.Add("(+4 음식)"); // 4
 
         // 사냥중 일때
-        log_hunt.Add(""); // 0
-        log_hunt.Add(""); // 1
-        log_hunt.Add(""); // 2
-        log_hunt.Add(""); // 3
-        log_hunt.Add("(+4 음식)"); // 4
-        log_hunt.Add("(+5 음식)"); // 5
-        log_hunt.Add("(+6 음식)"); // 6
-        log_hunt.Add("(+7 음식)"); // 7
-        log_hunt.Add("(+8 음식)"); // 8
-        log_hunt.Add("(+9 음식)"); // 9
-        log_hunt.Add("(+10 음식)"); // 10
+
+
 
         // 매우 피로함
         log_tired.Add("너무 피곤해서 제대로 쉴 수가 없다");
