@@ -71,11 +71,12 @@ public class TextSync : MonoBehaviour
     {
         gm = GameManager.Instance;
 
+        // 게임 시작할때 수치 기본값 셋팅
         Health.value = 100;
         Energy.value = 100;
         Hunger.value = 100;
         Moist.value = 90;
-        Hardest.value = 0;
+        Hardest.value = 80;
 
 
     }
@@ -121,7 +122,7 @@ public class TextSync : MonoBehaviour
 
 
             // Slider 수치가 일정 이하 일경우 깜빡임
-            if (Health.value < gm.lowvalue)
+            if (Health.value <= gm.lowvalue)
             {
                 Blinking.Instance.SliderBlink(oHealth);
             }
@@ -129,7 +130,7 @@ public class TextSync : MonoBehaviour
             {
                 oHealth.SetActive(true);
             }
-            if(Energy.value < gm.lowvalue)
+            if(Energy.value <= gm.lowvalue)
             {
                 Blinking.Instance.SliderBlink(oEnergy);
             }
@@ -137,7 +138,7 @@ public class TextSync : MonoBehaviour
             {
                 oEnergy.SetActive(true);
             }
-            if(Hunger.value < gm.lowvalue)
+            if(Hunger.value <= gm.lowvalue)
             {
                 Blinking.Instance.SliderBlink(oHunger);
             }
@@ -145,7 +146,7 @@ public class TextSync : MonoBehaviour
             {
                 oHunger.SetActive(true);
             }
-            if(Moist.value < gm.lowvalue)
+            if(Moist.value <= gm.lowvalue)
             {
                 Blinking.Instance.SliderBlink(oMoist);
             }
@@ -153,7 +154,7 @@ public class TextSync : MonoBehaviour
             {
                 oMoist.SetActive(true);
             }
-            if(Hardest.value > (100 - gm.lowvalue))
+            if(Hardest.value >= (100 - gm.lowvalue))
             {
                 Blinking.Instance.SliderBlink(oHardest);
             }

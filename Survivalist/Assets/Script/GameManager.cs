@@ -15,15 +15,23 @@ public class GameManager : MonoBehaviour
 
     // 게임내 변수들
 
-    /*(저장대상)*/ protected internal int water = 0; // 물
-    /*(저장대상)*/ protected internal int food = 0; // 음식
-    /*(저장대상)*/ protected internal int wood = 0; // 나무
-    /*(저장대상)*/ protected internal int leather = 0; // 가죽
-    /*(저장대상)*/ protected internal int straw = 0; // 짚
-    /*(저장대상)*/ protected internal int leaf = 0; // 나뭇잎
-    /*(저장대상)*/ protected internal int rock = 0; // 돌
-                  
-    /*(저장대상)*/ protected internal int day = 1; // 생존한 일수
+    /*(저장대상)*/
+    protected internal int water = 0; // 물
+    /*(저장대상)*/
+    protected internal int food = 0; // 음식
+    /*(저장대상)*/
+    protected internal int wood = 0; // 나무
+    /*(저장대상)*/
+    protected internal int leather = 0; // 가죽
+    /*(저장대상)*/
+    protected internal int straw = 0; // 짚
+    /*(저장대상)*/
+    protected internal int leaf = 0; // 나뭇잎
+    /*(저장대상)*/
+    protected internal int rock = 0; // 돌
+
+    /*(저장대상)*/
+    protected internal int day = 1; // 생존한 일수
     protected internal int log_index = 0; // 로그 번호
 
     // 쿨타임중 행동개시
@@ -48,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     /* 지역변수화 전역변수 */
     protected internal float act_sec; // 행동할때 체크하는 초시계
-    
+
     //-------------------
 
 
@@ -66,18 +74,20 @@ public class GameManager : MonoBehaviour
     // 행동별 쿨타임 프리셋
     // 0: 물, 1: 파밍, 2: 사냥, 3: 먹는다, 4: 마신다, 5: 재료, 6: 취침
 
-    float[] act_cooltime = new float[] { 5, 9, 12, 5, 5, 15, 10 };
+    protected internal float[] act_cooltime = new float[] { 5, 9, 12, 5, 5, 15, 10 };
 
     // 행동별 수치 하락 비율
+    // (난수값 * 변수) 계산식으로 수치 하락
     // 0: 체력, 1: 포만감, 2: 갈증, 3: 피로도
-    protected internal float[] act_getwater = new float[] {1.2f, 1.0f, .3f, .8f}; // 물
-    protected internal float[] act_goforage = new float[] {1.2f, .6f, 0.8f, 1.0f}; // 파밍
-    protected internal float[] act_hunt = new float[] {.4f, .3f, .35f, .35f}; // 사냥
-    protected internal float[] act_eatfood = new float[] {0, 0, .07f };  // 식사 -- 일시적으로 무력화됨 
-    protected internal float[] act_material = new float[] {.2f, .2f, .2f, .2f }; // 재료
+    protected internal float[] act_getwater = new float[] { 1.2f, 1.0f, .3f, .8f }; // 물
+    protected internal float[] act_goforage = new float[] { 1.2f, .6f, 0.8f, 1.0f }; // 파밍
+    protected internal float[] act_hunt = new float[] { .4f, .3f, .35f, .35f }; // 사냥
+    protected internal float[] act_eatfood = new float[] { 0, 0, .07f };  // 식사 -- 일시적으로 무력화됨 
+    protected internal float[] act_material = new float[] { .2f, .2f, .2f, .2f }; // 재료
     protected internal float[] act_sleep = new float[] { 0, .07f, .1f }; // 취침 -- 일시적으로 무력화됨
 
     // 활동시 난수값 0 나왔을때 (허탕쳤을때) 능력치 임의 값으로 감소
+    // (난수값 * 변수) 계산식으로 수치 하락
     // 0: 물, 1. 파밍, 2. 사냥, 3. 재료 
     protected internal float[] act_vain = new float[] { .6f, .8f, .3f, .1f };
 
@@ -98,6 +108,17 @@ public class GameManager : MonoBehaviour
     protected internal int[] act_material_range = new int[] { 1, 10 }; // 재료
     protected internal int[] act_sleep_range = new int[] { 1, 5 }; // 취침
 
+    // 피로도 누적으로 인한 능률 저하시 가챠 바운더리
+    // 0: 물, 1: 파밍, 2: 사냥, 3: 재료
+    protected internal int[] act_hard_getwater_range = new int[] {1, 5};
+    protected internal int[] act_hard_forgage_range = new int[] {1, 2};
+    protected internal int[] act_hard_hunt_range = new int[] {2, 6};
+    protected internal int[] act_hard_material_range = new int[] {1, 5};
+
+    // 피로도가 해당 값 이상 일경우 능률 저하
+    // 0: 물, 1: 파밍, 2: 사냥
+    protected internal float[] act_hardest_decline = new float[] {80, 70, 60};
+
     // 활동시 필요한 최소한의 수치 -- 피로도는 현재치가 프리셋 이상일 경우
     // 0: 물, 1: 파밍, 2: 사냥, 3: 먹는다, 4: 재료
     // 0: 에너지, 1: 포만감, 2: 촉촉함, 3: 피로도
@@ -108,12 +129,22 @@ public class GameManager : MonoBehaviour
     protected internal float[] act_material_min = new float[] { }; // 재료
     protected internal float[] act_sleep_min = new float[] {0, 1, 1}; // 취침
 
-    // 먹고 마실때 먹는 음식 대비 상승비
+    // 먹고 마실때 먹는 식품 대비 수치 상승비
     // 0: 음식, 1: 물
+    // (음식수 * 변수값) 계산식으로 수치 상승
     protected internal float[] act_food_ratio = new float[] {.7f, 1.0f };
 
     // Slider 가 해당 값 미만 일경우 깜박거림
     protected internal float lowvalue = 20;
+
+    // 피로도가 특정 수치 이상일 경우 강제로 잠을 잔다.
+    protected internal int act_force_sleep = 90;
+
+    // 이벤트 (부상) 가챠 확률 (숫자만큼 난수기 삽입)
+    protected internal int event_injury_chance = 10;
+
+    // 이벤트 (부상) 까는 생명수치 바운더리
+    protected internal int[] event_injury_range = new int[] {3, 10}; 
 
     //---------------------------------------------------------------------------
 
@@ -184,6 +215,9 @@ public class GameManager : MonoBehaviour
         act = Act_function.Instance;
         ts = TextSync.Instance;
         le = LogEdit.Instance;
+
+        // 로그 txt 초기화
+        logtxt.text = "";
     }
 
     void Start()
@@ -288,6 +322,7 @@ public class GameManager : MonoBehaviour
             if (!isCooltime)
             {
                 
+                
                 if((time >= 9 && !isAm && time != 12) | (time <= 5 | time == 12 && isAm)) // 밤시간 (오후 9 ~ 오전 5) 밤 전용 로그 출력
                 {
                     // 아무것도 안할때 밤 로그 출력
@@ -309,9 +344,38 @@ public class GameManager : MonoBehaviour
 
                 }
 
+                // 이벤트 (부상)
+                int i_injury_chance = act.Gacha(0, event_injury_chance); // 부상 걸리는지 여부 결정
+                Debug.Log(i_injury_chance);
+                if(i_injury_chance == 0) // 부상 걸렸으면 깔 생명 양 결정
+                {
+                    int i_injury_health = act.Gacha(event_injury_range[0], event_injury_range[1]);
+                    if(ts.Health.value > i_injury_health) // 현재 생명수치가 더 많을 경우
+                    {
+                        ts.Health.value -= i_injury_health; // 생명 깍고
+
+                        // 부상 로그 출력
+                        string ment = "이벤트: 부상 (-" + i_injury_health + ")";
+                        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                        log_index++; // 로그 인덱스 ++
+
+
+                    }
+                    else // 현재 생명수치가 더 적을 경우 == 사먕
+                    {
+                        ts.Health.value = 0;
+                        // 부상 로그 출력
+                        string ment = "이벤트: 부상 (-" + i_injury_health + ") \n 사망..";
+                        logtxt.text = (log_index + 1) + ". " + ment + "\n" + logtxt.text; // 멘트 출력
+                        isCooltime = true;
+                        log_index++; // 로그 인덱스 ++
+                    }
+
+                }
+
                 
                 // 안자고 일만하니까 강제로 자
-                if(ts.Hardest.value > 90)
+                if(ts.Hardest.value >= act_force_sleep)
                 {
                     isSleep = true;
                     isCooltime = true;
@@ -321,7 +385,7 @@ public class GameManager : MonoBehaviour
 
             }
 
-            // 포만감, 갈증에 따라 체력 회복
+            // 체력 회복
             if(ts.Energy.value < 100 && !isCooltime)
             {
                 if (ts.Hunger.value > 0 && ts.Moist.value > 0)
@@ -353,7 +417,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("E");
                     }
 
-                    if (ts.Hunger.value >= 60 && ts.Moist.value >= 60 && ts.Hardest.value <= 40) // 포만감, 갈증, 피로도 60이상인 경우 체력 100까지 상승 가능
+                    if (ts.Hunger.value >= 60 && ts.Moist.value >= 60 && ts.Hardest.value <= 40 && ts.Health.value >= 60) // 포만감, 갈증, 피로도, 생명 60% 상위권 경우 체력 100까지 상승 가능
                     {
                         if (i > (100 - ts.Energy.value)) // 필요량을 넘어갈때
                         {
@@ -364,7 +428,7 @@ public class GameManager : MonoBehaviour
                             ts.Energy.value += i; // 체력 증가
                         }
                     }
-                    else // 포만감, 갈증, 피로도 60이하인 경우 체력 50까지 상승 가능
+                    else // 포만감, 갈증, 피로도, 생명 60이하인 경우 체력 50까지 상승 가능
                     {
                         if (i > (50 - ts.Energy.value)) // 필요량을 넘어갈때
                         {
@@ -380,7 +444,6 @@ public class GameManager : MonoBehaviour
                 } // if(hunger > 0 && thirst > 0)
 
             } // if(energy < 100 && !isCooltime)
-
             
             sec = 0;
         }
@@ -394,90 +457,9 @@ public class GameManager : MonoBehaviour
             timetxt.text = "오후 " + time.ToString() + "시";
         }
 
-        // Input 영역
-        if (!isCooltime) // 쿨타임 안 걸렸으면
-        {
+        
 
-            if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) // 물 얻으러
-            {
-                if(ts.Energy.value >= act_getwater_min[0] && ts.Hunger.value >= act_getwater_min[1] && ts.Moist.value >= act_getwater_min[2] && ts.Hardest.value <= act_getwater_min[3])
-                {
-                    //Debug.Log("물 얻으러");
-                    isGetsWater = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[0];
-                }
-            }
-
-            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) // 파밍
-            {
-                if (ts.Energy.value >= act_goforgage_min[0] && ts.Hunger.value >= act_goforgage_min[1] && ts.Moist.value >= act_goforgage_min[2] && ts.Hardest.value <= act_goforgage_min[3])
-                {
-                    //Debug.Log("파밍");
-                    isForage = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[1];
-                }
-            }
-
-            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) // 사냥
-            {
-                if (ts.Energy.value >= act_hunt_min[0] && ts.Hunger.value >= act_hunt_min[1] && ts.Moist.value >= act_hunt_min[2] && ts.Hardest.value <= act_hunt_min[3])
-                {
-                    //Debug.Log("사냥");
-                    isHunt = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[2];
-                }
-            }
-
-            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // 먹는다
-            {
-                //if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // 음식이 한단위 이상 있는지, 
-                //{
-                    //Debug.Log("먹는다");
-                    isEat = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[3];
-                //}
-            }
-
-            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // 콸콸
-            {
-                if(water > 0 && ts.Moist.value < 100f) // 물이 최소한 만큼 있는지, 갈증이 이미 해소되었는지
-                {
-                    //Debug.Log("콸콸");
-                    isDrink = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[4];
-                }
-            }
-
-            //else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6)) // 재료
-            //{
-            //    if (ts.Energy.value >= act_material_min[0] && ts.Hunger.value >= act_material_min[1] && ts.Moist.value >= act_material_min[2])
-            //    {
-            //        isMaterial = true;
-            //        isCooltime = true;
-            //        cooltime = act_cooltime[5];
-            //    }
-                
-            //}
-
-            else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // 취침
-            {
-                //if(ts.Hunger.value >= act_sleep_min[1] && ts.Moist.value >= act_sleep_min[2] && ts.Hardest.value > 0)
-                //{
-                    //Debug.Log("취침");
-                    isSleep = true;
-                    isCooltime = true;
-                    cooltime = act_cooltime[6];
-                //}
-            }
-
-        }
-
-    }
+    } // void Update
 
     // 물 생산 로그 전송
     public void Log_getWater(int amount)

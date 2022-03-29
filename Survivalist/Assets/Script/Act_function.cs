@@ -55,9 +55,21 @@ public class Act_function : MonoBehaviour
         if (gm.act_sec >= 1f) // 실행
         {
             int isSuccess = Gacha(0, gm.act_success[0]); // 성공 확률 가챠 난수 생성
-            int ran = Gacha(gm.act_getwater_range[0], gm.act_getwater_range[1]); // 아이템 획득 가챠 난수 생성
-            
-            if(isSuccess != 0) // 0이 아니면 성공
+            int ran = 0; // 아이템 획득 가챠 난수
+
+            // 과도하게 피로할 경우 능률 저하
+            if (gm.act_hardest_decline[0] >= ts.Hardest.value)
+            {
+                ran = Gacha(gm.act_hard_getwater_range[0], gm.act_hard_getwater_range[1]); // 능률 저하에 따른 가챠 난수 생성
+            }
+            else
+            {
+                Debug.Log("물 능률저하중...");
+                ran = Gacha(gm.act_getwater_range[0], gm.act_getwater_range[1]); // 피로도가 정상일 경우 정상 가챠 난수 생성
+            }
+
+
+            if (isSuccess != 0) // 0이 아니면 성공
             {
                 if (ts.Energy.value > (ran * gm.act_getwater[0]) && ts.Hunger.value > (ran * gm.act_getwater[1]) && ts.Moist.value > (ran * gm.act_getwater[2]) && (100 - ts.Hardest.value) > (ran * gm.act_getwater[3])) // 능력 감소 전 체크
                 {
@@ -293,27 +305,9 @@ public class Act_function : MonoBehaviour
         return 0;
     }
 
-    public int GetMat() // 자원 종류
+    public int GetMat() // 자원수집
     {
-        int ran = 0;
-        if (gm.cooltime > 0)
-        {
-            gm.act_sec += Time.deltaTime;
-            gm.cooltime -= Time.deltaTime;
-        }
-        else if (gm.cooltime <= 0)
-        {
-            gm.isCooltime = false;
-            gm.isMaterial = false;
-        }
-
-        if (gm.act_sec >= 1f) // 실행
-        {
-            ran = Random.Range(1, 5);
-            gm.act_sec = 0;
-        }
-
-        return ran;
+        return 0;
     }
 
     public int Sleep() // 잔다

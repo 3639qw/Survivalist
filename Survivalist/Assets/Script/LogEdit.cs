@@ -130,6 +130,9 @@ public class LogEdit : MonoBehaviour
         // 매우 피로함
         log_tired.Add("너무 피곤해서 제대로 쉴 수가 없다");
 
+        // 이벤트
+
+
     }
 
 }

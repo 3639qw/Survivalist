@@ -3071,6 +3071,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1376487757}
   - component: {fileID: 1376487758}
+  - component: {fileID: 1376487759}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3108,6 +3109,18 @@ MonoBehaviour:
   timetxt: {fileID: 465790244}
   cooltimetxt: {fileID: 1854987677}
   cheattxt: {fileID: 1933545944}
+--- !u!114 &1376487759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376487756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73dd1da144b84b44aac160a1fd348f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1384177714
 GameObject:
   m_ObjectHideFlags: 0

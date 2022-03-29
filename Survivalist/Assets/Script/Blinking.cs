@@ -89,7 +89,7 @@ public class Blinking : MonoBehaviour
         }
         else if (!sfade)
         {
-            if (stime >= .25f)
+            if (stime >= .4f)
             {
                 sfade = true;
                 stime = 0;
@@ -119,8 +119,6 @@ public class Blinking : MonoBehaviour
             }
         }
     }
-
-
 
 
 }
