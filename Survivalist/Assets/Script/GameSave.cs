@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 [System.Serializable]
@@ -26,6 +24,19 @@ public class GameJson
     public float hunger;
     public float thirst;
     public float hardest;
+
+    public int used_food; // 먹은 음식의 양 
+    public int used_water; // 마신 물의 양
+    public int used_rock; // 사용한 돌의 양
+
+    public int getwater_count; // 바닷물을 정화한 횟수
+    public int forgage_count; // 파밍을 한 횟수
+    public int hunt_count; // 사냥을 한 횟수
+    public int material_count; // 재료는 찾아떠난 횟수
+
+    public int attack_count; // 습격에 당한 횟수
+
+
 }
 
 
@@ -92,6 +103,17 @@ public class GameSave : MonoBehaviour
             ts.Hunger.value = jsclass.hunger;
             ts.Moist.value = jsclass.thirst;
             ts.Hardest.value = jsclass.hardest;
+
+            gm.used_food = jsclass.used_food;
+            gm.used_water = jsclass.used_water;
+            gm.used_rock = jsclass.used_rock;
+
+            gm.getwater_count = jsclass.getwater_count;
+            gm.forgage_count = jsclass.forgage_count;
+            gm.hunt_count = jsclass.hunt_count;
+            gm.material_count = jsclass.material_count;
+
+            gm.attack_count = jsclass.attack_count;
         }
         else
         {
@@ -117,6 +139,17 @@ public class GameSave : MonoBehaviour
         jsclass.hunger = ts.Hunger.value;
         jsclass.thirst = ts.Moist.value;
         jsclass.hardest = ts.Hardest.value;
+
+        jsclass.used_food = gm.used_food;
+        jsclass.used_water = gm.used_water;
+        jsclass.used_rock = gm.used_rock;
+
+        jsclass.getwater_count = gm.getwater_count;
+        jsclass.forgage_count = gm.forgage_count;
+        jsclass.hunt_count = gm.hunt_count;
+        jsclass.material_count = gm.material_count;
+
+        jsclass.attack_count = gm.attack_count;
 
         //Json string 으로 변환
         string json = JsonUtility.ToJson(jsclass, true);
@@ -149,7 +182,7 @@ public class GameSave : MonoBehaviour
 
     public void Delete()
     {
-        System.IO.File.Delete(Application.dataPath + "/Save.json");
+        File.Delete(Application.dataPath + "/Save.json");
         Debug.Log("세이브 삭제");
     }
 }

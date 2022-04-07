@@ -98,6 +98,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (gm.act_vain[0] * gm.act_getwater[1]);
                     ts.Moist.value -= (gm.act_vain[0] * gm.act_getwater[2]);
                     ts.Hardest.value += (gm.act_vain[0] * gm.act_getwater[3]);
+                    gm.Log_getWater(-1); // 망하면 -1 로 구분가능하게끔 로그 전송
                     Debug.Log("망함");
                     return 0;
                 }
@@ -169,6 +170,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (gm.act_vain[1] * gm.act_goforage[1]);
                     ts.Moist.value -= (gm.act_vain[1] * gm.act_goforage[2]);
                     ts.Hardest.value += (gm.act_vain[1] * gm.act_goforage[3]);
+                    gm.Log_forgage(-1); // 망하면 -1 로 구분가능하게끔 로그 전송
                     Debug.Log("망함");
                     return 0;
                 }
@@ -229,6 +231,7 @@ public class Act_function : MonoBehaviour
                     ts.Hunger.value -= (gm.act_vain[2] * gm.act_hunt[1]);
                     ts.Moist.value -= (gm.act_vain[2] * gm.act_hunt[2]);
                     ts.Hardest.value += (gm.act_vain[2] * gm.act_hunt[3]);
+                    gm.Log_hunt(-1); // 망함 로그 전송
                     Debug.Log("망함");
                     return 0;
                 }
@@ -257,30 +260,17 @@ public class Act_function : MonoBehaviour
 
         if (gm.act_sec >= 1f) // 실행
         {
-            int ran = Gacha(gm.act_eat_range[0], gm.act_eat_range[1]); // 음식차감 횟수 가챠 난수 생성
+            int ran = Gacha(gm.act_eat_range[0], gm.act_eat_range[1]); // 아이템 획득 가챠 난수 생성
 
-            //if (ts.Moist.value > (ran * gm.act_eatfood[2])) // 능력 감소 전 체크
-            //{
-                if(gm.food >= ran) // 난수보다 갖고있는 음식수 적으면 현재 음식수로 return
-                {
-                    //ts.Moist.value -= (ran * gm.act_eatfood[2]);
-                }
-                else // 음식 수 미달이면 최소수 -1 로 차감
-                {
-                    Debug.Log("식품 미달");
-                    //ts.Moist.value -= (gm.food * gm.act_eatfood[2]);
-                    return gm.food;
-                }
-            //}
-            //else
-            //{
-            //    // 능력치 부족
-            //    Debug.Log("능력치가 모자라..");
-            //    return 999;
-            //}
+            if (ran > gm.food) // 갖고 있는 음식이 난수 값보다 작을 경우
+            {
+                Debug.Log("음식 부족");
+                return -1;
+            }
+
             gm.act_sec = 0; // 초시계 초기화
             Debug.Log(ran);
-            
+
             return ran; // 난수 값 리턴
         }
         return 0;
@@ -303,9 +293,10 @@ public class Act_function : MonoBehaviour
         {
             int ran = Gacha(gm.act_drink_range[0], gm.act_drink_range[1]); // 아이템 획득 가챠 난수 생성
 
-            if(ran > gm.water) // 물이 난수 값보다 작을 경우 자기 자신을 리턴하여 차감
+            if(ran > gm.water) // 갖고 있는 물이 난수 값보다 작을 경우
             {
-                return gm.water;
+                Debug.Log("물 부족");
+                return -1; 
             }
 
             gm.act_sec = 0; // 초시계 초기화

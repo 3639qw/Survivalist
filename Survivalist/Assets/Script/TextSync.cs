@@ -35,14 +35,14 @@ public class TextSync : MonoBehaviour
     /*(저장대상)*/ public Slider Moist;
     /*(저장대상)*/ public Slider Hardest;
 
-    public GameObject oHealth;
-    public GameObject oEnergy;
-    public GameObject oHunger;
-    public GameObject oMoist;
-    public GameObject oHardest;
+    public GameObject oHealth; // 건강 slider 오브젝트
+    public GameObject oEnergy; // 에너지 slider 오브젝트
+    public GameObject oHunger; // 포만감 slider 오브젝트
+    public GameObject oMoist; // 수분감 slider 오브젝트
+    public GameObject oHardest; // 피로도 slider 오브젝트
 
-    public Color minus; // 수치 딸리면
-    public Color current; // 정상
+    public Color minus; // 수치 딸리면 행동 txt 요 컬러로 변경될꺼임
+    public Color current; // 정상수치일때 복원
 
     public Color hardesttxt_color; // 행동별로 능률 저하에 해당될경우 행동 텍스트 색 조정
 
@@ -78,9 +78,7 @@ public class TextSync : MonoBehaviour
         Energy.value = 100;
         Hunger.value = 100;
         Moist.value = 90;
-        Hardest.value = 80;
-
-
+        Hardest.value = 0;
     }
 
     // Update is called once per frame
@@ -133,7 +131,7 @@ public class TextSync : MonoBehaviour
 
 
             // Slider 수치가 일정 이하 일경우 깜빡임
-            if (Health.value <= gm.lowvalue)
+            if (Health.value <= gm.lowvalue) // 생명 수치
             {
                 Blinking.Instance.SliderBlink(oHealth);
             }
@@ -141,7 +139,7 @@ public class TextSync : MonoBehaviour
             {
                 oHealth.SetActive(true);
             }
-            if(Energy.value <= gm.lowvalue)
+            if(Energy.value <= gm.lowvalue) // 에너지 수치
             {
                 Blinking.Instance.SliderBlink(oEnergy);
             }
@@ -149,7 +147,7 @@ public class TextSync : MonoBehaviour
             {
                 oEnergy.SetActive(true);
             }
-            if(Hunger.value <= gm.lowvalue)
+            if(Hunger.value <= gm.lowvalue) // 포만감 수치
             {
                 Blinking.Instance.SliderBlink(oHunger);
             }
@@ -157,7 +155,7 @@ public class TextSync : MonoBehaviour
             {
                 oHunger.SetActive(true);
             }
-            if(Moist.value <= gm.lowvalue)
+            if(Moist.value <= gm.lowvalue) // 수분감 수치
             {
                 Blinking.Instance.SliderBlink(oMoist);
             }
@@ -165,7 +163,7 @@ public class TextSync : MonoBehaviour
             {
                 oMoist.SetActive(true);
             }
-            if(Hardest.value >= (100 - gm.lowvalue))
+            if(Hardest.value >= (100 - gm.lowvalue)) // 피로도 수치
             {
                 Blinking.Instance.SliderBlink(oHardest);
             }
@@ -173,6 +171,25 @@ public class TextSync : MonoBehaviour
             {
                 oHardest.SetActive(true);
             }
+
+            // 밥먹고 물먹을때 음식 물 없으면, 포만감, 수분감 95이상일 경우 알파값 조정
+            if(gm.food < 1 && Hunger.value > 95f)
+            {
+                act_eatfood_txt.color = minus;
+            }
+            else
+            {
+                act_eatfood_txt.color = current;
+            }
+            if(gm.water < 1 && Moist.value > 95f)
+            {
+                act_drink_txt.color = minus;
+            }
+            else
+            {
+                act_drink_txt.color = current;
+            }
+
         }
         else
         {
@@ -207,6 +224,14 @@ public class TextSync : MonoBehaviour
             "\n체력: " + Energy.value + 
             "\n포만감: " + Hunger.value + 
             "\n갈증: " + Moist.value + 
-            "\n피로도: " + Hardest.value;
+            "\n피로도: " + Hardest.value + 
+            "\n먹은 음식: " + gm.used_food + 
+            "\n마신 물: " + gm.used_water + 
+            "\n사용한 돌: " + gm.used_rock +
+            "\n정화: " + gm.getwater_count + 
+            "\n파밍: " + gm.forgage_count + 
+            "\n사냥: " + gm.hunt_count + 
+            "\n재료: " + gm.material_count +
+            "\n습격: " + gm.attack_count;
     }
 }

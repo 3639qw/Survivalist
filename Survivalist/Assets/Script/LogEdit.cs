@@ -98,10 +98,13 @@ public class LogEdit : MonoBehaviour
         log_none_night.Add("너무 춥다..."); // 11
 
         // 물을 정화중 일때
+        log_getwater.Add("물이 충분히 모인 것 같다.");
 
         // 파밍중 일때
+        log_forgage.Add("충분한 식량을 모은 것 같다.");
 
         // 사냥중 일때
+        log_hunt.Add("많은 식량을 확보한 것 같다.");
 
 
 

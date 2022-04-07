@@ -31,6 +31,7 @@ public class InputDevice : MonoBehaviour
                     gm.isGetsWater = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[0];
+                    gm.getwater_count++; // 물얻은 횟수 History ++
                 }
             }
 
@@ -42,6 +43,7 @@ public class InputDevice : MonoBehaviour
                     gm.isForage = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[1];
+                    gm.forgage_count++; // 파밍한 횟수 History ++
                 }
             }
 
@@ -53,6 +55,7 @@ public class InputDevice : MonoBehaviour
                     gm.isHunt = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[2];
+                    gm.hunt_count++; // 사냥한 횟수 History ++
                 }
             }
 
@@ -60,7 +63,7 @@ public class InputDevice : MonoBehaviour
             {
                 //if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // 음식이 한단위 이상 있는지, 
                 //{
-                if (gm.food > 0 && ts.Hunger.value < 100f)
+                if (gm.food > 0 && ts.Hunger.value < 95f)
                 {
                     //Debug.Log("먹는다");
                     gm.isEat = true;
@@ -72,7 +75,7 @@ public class InputDevice : MonoBehaviour
 
             else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // 콸콸
             {
-                if (gm.water > 0 && ts.Moist.value < 100f) // 물이 최소한 만큼 있는지, 갈증이 이미 해소되었는지
+                if (gm.water > 0 && ts.Moist.value < 95f) // 물이 최소한 만큼 있는지, 갈증이 95 이하인지 여부
                 {
                     //Debug.Log("콸콸");
                     gm.isDrink = true;
