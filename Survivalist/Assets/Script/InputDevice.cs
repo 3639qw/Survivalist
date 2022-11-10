@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,53 +19,53 @@ public class InputDevice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Input ¿µ¿ª
-        if (!gm.isCooltime) // ÄğÅ¸ÀÓ ¾È °É·ÈÀ¸¸é
+        // Input ì˜ì—­
+        if (!gm.isCooltime) // ì¿¨íƒ€ì„ ì•ˆ ê±¸ë ¸ìœ¼ë©´
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) // ¹° ¾òÀ¸·¯
+            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) // ë¬¼ ì–»ìœ¼ëŸ¬
             {
                 if (ts.Energy.value >= gm.act_getwater_min[0] && ts.Hunger.value >= gm.act_getwater_min[1] && ts.Moist.value >= gm.act_getwater_min[2] && ts.Hardest.value <= gm.act_getwater_min[3])
                 {
-                    //Debug.Log("¹° ¾òÀ¸·¯");
+                    //Debug.Log("ë¬¼ ì–»ìœ¼ëŸ¬");
                     gm.isGetsWater = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[0];
-                    gm.getwater_count++; // ¹°¾òÀº È½¼ö History ++
+                    gm.getwater_count++; // ë¬¼ì–»ì€ íšŸìˆ˜ History ++
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) // ÆÄ¹Ö
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) // íŒŒë°
             {
                 if (ts.Energy.value >= gm.act_goforgage_min[0] && ts.Hunger.value >= gm.act_goforgage_min[1] && ts.Moist.value >= gm.act_goforgage_min[2] && ts.Hardest.value <= gm.act_goforgage_min[3])
                 {
-                    //Debug.Log("ÆÄ¹Ö");
+                    //Debug.Log("íŒŒë°");
                     gm.isForage = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[1];
-                    gm.forgage_count++; // ÆÄ¹ÖÇÑ È½¼ö History ++
+                    gm.forgage_count++; // íŒŒë°í•œ íšŸìˆ˜ History ++
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) // »ç³É
+            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) // ì‚¬ëƒ¥
             {
                 if (ts.Energy.value >= gm.act_hunt_min[0] && ts.Hunger.value >= gm.act_hunt_min[1] && ts.Moist.value >= gm.act_hunt_min[2] && ts.Hardest.value <= gm.act_hunt_min[3])
                 {
-                    //Debug.Log("»ç³É");
+                    //Debug.Log("ì‚¬ëƒ¥");
                     gm.isHunt = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[2];
-                    gm.hunt_count++; // »ç³ÉÇÑ È½¼ö History ++
+                    gm.hunt_count++; // ì‚¬ëƒ¥í•œ íšŸìˆ˜ History ++
                 }
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // ¸Ô´Â´Ù
+            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) // ë¨¹ëŠ”ë‹¤
             {
-                //if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // À½½ÄÀÌ ÇÑ´ÜÀ§ ÀÌ»ó ÀÖ´ÂÁö, 
+                //if (food > 0 && ts.Moist.value >= act_eatfood_min[2] && ts.Hunger.value < 100f) // ìŒì‹ì´ í•œë‹¨ìœ„ ì´ìƒ ìˆëŠ”ì§€, 
                 //{
                 if (gm.food > 0 && ts.Hunger.value < 95f)
                 {
-                    //Debug.Log("¸Ô´Â´Ù");
+                    //Debug.Log("ë¨¹ëŠ”ë‹¤");
                     gm.isEat = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[3];
@@ -73,18 +73,18 @@ public class InputDevice : MonoBehaviour
                 //}
             }
 
-            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // ÄåÄå
+            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5)) // ì½¸ì½¸
             {
-                if (gm.water > 0 && ts.Moist.value < 95f) // ¹°ÀÌ ÃÖ¼ÒÇÑ ¸¸Å­ ÀÖ´ÂÁö, °¥ÁõÀÌ 95 ÀÌÇÏÀÎÁö ¿©ºÎ
+                if (gm.water > 0 && ts.Moist.value < 95f) // ë¬¼ì´ ìµœì†Œí•œ ë§Œí¼ ìˆëŠ”ì§€, ê°ˆì¦ì´ 95 ì´í•˜ì¸ì§€ ì—¬ë¶€
                 {
-                    //Debug.Log("ÄåÄå");
+                    //Debug.Log("ì½¸ì½¸");
                     gm.isDrink = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[4];
                 }
             }
 
-            //else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6)) // Àç·á
+            //else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6)) // ì¬ë£Œ
             //{
             //    if (ts.Energy.value >= act_material_min[0] && ts.Hunger.value >= act_material_min[1] && ts.Moist.value >= act_material_min[2])
             //    {
@@ -95,13 +95,13 @@ public class InputDevice : MonoBehaviour
 
             //}
 
-            else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // ÃëÄ§
+            else if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7)) // ì·¨ì¹¨
             {
                 //if(ts.Hunger.value >= act_sleep_min[1] && ts.Moist.value >= act_sleep_min[2] && ts.Hardest.value > 0)
                 //{
                 if (ts.Hardest.value > 0)
                 {
-                    //Debug.Log("ÃëÄ§");
+                    //Debug.Log("ì·¨ì¹¨");
                     gm.isSleep = true;
                     gm.isCooltime = true;
                     gm.cooltime = gm.act_cooltime[6];
@@ -109,6 +109,6 @@ public class InputDevice : MonoBehaviour
                 //}
             }
 
-        } // Input ¿µ¿ª if (!isCooltime)
+        } // Input ì˜ì—­ if (!isCooltime)
     }
 }

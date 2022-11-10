@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
     protected internal int act_force_sleep = 90;
 
     // 이벤트 (부상) 가챠 확률 (숫자만큼 난수기 삽입)
-    protected internal int event_injury_chance = 10;
+    protected internal int event_injury_chance = 30;
 
     // 이벤트 (부상) 까는 생명수치 바운더리
     protected internal int[] event_injury_range = new int[] {3, 8};
